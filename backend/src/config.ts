@@ -18,6 +18,14 @@ export const AppConfig = registerAs('app', () => {
   };
 });
 
+export const JWTConfig = registerAs('jwt', () => {
+  const port = process.env.SERVER_PORT;
+
+  return {
+    port: port,
+  };
+});
+
 export const MongoConfig = registerAs('mongo', () => {
   const user = process.env.MONGO_USER;
   const password = process.env.MONGO_PASSWORD;
