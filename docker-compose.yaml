@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=fifa
+      - MONGO_INITDB_ROOT_USERNAME=backend
+      - MONGO_INITDB_ROOT_PASSWORD=VpGdxrtBbzs0Zgxn5o
+    ports:
+      - 8081:27017
