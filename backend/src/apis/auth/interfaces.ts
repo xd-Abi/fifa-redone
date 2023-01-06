@@ -12,11 +12,6 @@ import {
 } from 'class-validator';
 
 export class SignUpInterface {
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(25)
-  username: string;
-
   @IsNotEmpty()
   @IsEmail()
   email: string;
@@ -42,6 +37,7 @@ export class RefreshAccessTokenInterface {
 
 export interface AuthLoginDto {
   ip: string;
+  successful?: boolean;
 }
 
 export interface AuthHistoryDto {
@@ -50,6 +46,7 @@ export interface AuthHistoryDto {
 }
 
 export interface AuthIdentityDto {
+  email: string;
   password: string;
   salt: string;
   history: AuthHistoryDto;

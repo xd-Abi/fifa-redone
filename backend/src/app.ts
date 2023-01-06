@@ -14,6 +14,7 @@ import { AuthModule } from './apis/auth/module';
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
+
       useFactory: async (configService: ConfigService) => {
         const username = configService.get('mongo.user');
         const password = configService.get('mongo.password');

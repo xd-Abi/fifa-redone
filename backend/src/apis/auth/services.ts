@@ -45,7 +45,14 @@ export class AuthService {
    *
    * @param dto The datatransfer object, containing all authentication information
    */
-  async create(dto: AuthIdentityDto) {
-    await this.model.create(dto);
+  async create(dto: AuthIdentityDto): Promise<string | undefined> {
+    try {
+      const result = await this.model.create(dto);
+      return result.id;
+    } catch (err) {
+      throw new HttpException('Email already exists', HttpStatus.CONFLICT);
+    }
+
+    return undefined;
   }
 }

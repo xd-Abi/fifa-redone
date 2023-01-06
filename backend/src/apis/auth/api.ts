@@ -4,9 +4,9 @@
  */
 
 import { Body, Controller, Post } from '@nestjs/common';
-import { Get } from '@nestjs/common/decorators';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Get, Ip } from '@nestjs/common/decorators';
+import { JwtService } from '@nestjs/jwt';
+import { generateSalt, hashPassword } from 'src/utils';
 import {
   RefreshAccessTokenInterface,
   SignInInterface,
@@ -20,11 +20,15 @@ import { AuthService } from './services';
  */
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Get('sign-in')
   async getAll() {
-    return await this.authService.findOne('63b87d3b5869d00461ac8d9dF');
+    return await generateSalt(10);
+    // return await this.authService.findOne('63b87d3b5869d00461ac8d9dF');
   }
 
   /**
@@ -34,20 +38,7 @@ export class AuthController {
    * @param body The request body, which contains a valid email and password
    */
   @Post('sign-in')
-  async signIn(@Body() body: SignInInterface) {
-    await this.authService.create({
-      password: 'password',
-      salt: 'salt',
-      history: {
-        loginsCount: 2,
-        logins: [
-          {
-            ip: '127.0.0.1',
-          },
-        ],
-      },
-    });
-  }
+  async signIn(@Body() body: SignInInterface) {}
 
   /**
    * Sign up using username, email and password
@@ -55,7 +46,36 @@ export class AuthController {
    * @param body The request body, which contains a username, valid email and password
    */
   @Post('sign-up')
-  async signUp(@Body() body: SignUpInterface) {}
+  async signUp(@Ip() ip, @Body() body: SignUpInterface) {
+    const salt = await generateSalt(10);
+    const hashedPassword = await hashPassword(body.password, salt);
+    const id = await this.authService.create({
+      email: body.email,
+      password: hashedPassword,
+      salt: salt,
+      history: {
+        loginsCount: 1,
+        logins: [
+          {
+            ip: ip,
+            successful: true,
+          },
+        ],
+      },
+    });
+    const token = this.jwtService.sign(
+      {
+        sub: id,
+      },
+      {
+        expiresIn: '3600s',
+      },
+    );
+
+    return {
+      accessToken: token,
+    };
+  }
 
   /**
    * Obtain a new access token using the refresh token. If the refresh token is valid,

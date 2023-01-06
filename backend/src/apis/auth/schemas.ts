@@ -33,7 +33,10 @@ export class AuthHistory {
   timestamps: true,
 })
 export class AuthIdentity {
-  @Prop()
+  @Prop({ unique: true })
+  email: string;
+
+  @Prop({ minlength: 8 })
   @Exclude()
   password: string;
 
