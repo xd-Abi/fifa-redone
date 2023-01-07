@@ -5,7 +5,8 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
-import { SchemaTypes, Types } from 'mongoose';
+import { SchemaTypes } from 'mongoose';
+import * as uniqueValidator from 'mongoose-unique-validator';
 import { User } from '../user';
 
 @Schema()
@@ -22,8 +23,8 @@ export class AuthIdentity {
 
 @Schema()
 export class FifaAuthIdentityProvider {
-  @Prop({ ref: User.name, type: SchemaTypes.ObjectId })
-  uid: Types.ObjectId;
+  @Prop({ ref: User.name, type: SchemaTypes.ObjectId, unique: true })
+  uid: string;
 
   @Prop()
   @Exclude()
@@ -33,6 +34,8 @@ export class FifaAuthIdentityProvider {
   salt: string;
 }
 
-export const FifaAuthIdentityProviderSchema = SchemaFactory.createForClass(
-  FifaAuthIdentityProvider,
-);
+export const FifaAuthIdentityProviderSchema = () => {
+  const schema = SchemaFactory.createForClass(FifaAuthIdentityProvider);
+  schema.plugin(uniqueValidator);
+  return schema;
+};
