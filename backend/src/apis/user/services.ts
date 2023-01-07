@@ -6,6 +6,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { AuthIdentity } from '../auth';
 import { User, UserDocument } from './schemas';
 
 @Injectable()
@@ -74,7 +75,7 @@ export class UserService {
    * @param uid The unique identifier for the user
    * @param dto The data transfer object containg the identity information
    */
-  async addIdentity(uid: string, dto: object): Promise<void> {
+  async addIdentity(uid: string, dto: AuthIdentity): Promise<void> {
     const result = await this.findOne(uid);
 
     if (result.identities.includes(dto)) {

@@ -6,6 +6,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
+import { AuthIdentity } from '../auth';
 
 export enum Gender {
   Male = 0,
@@ -42,7 +43,7 @@ export class User {
   birthdate: string;
 
   @Prop({ default: [] })
-  identities: object[];
+  identities: AuthIdentity[];
 }
 
 export const UserSchema = () => {
