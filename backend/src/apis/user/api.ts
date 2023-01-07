@@ -3,8 +3,9 @@
  * @module User-API
  */
 
-import { Controller, Get } from '@nestjs/common';
-import { UserInterface } from './interfaces';
+import { Controller, Get, Headers } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UserService } from './services';
 
 /**
  * This controller is responsible for handling all profile actions. This includes
@@ -12,12 +13,20 @@ import { UserInterface } from './interfaces';
  */
 @Controller('me')
 export class UserController {
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
+
   @Get()
-  async getMe() {
-    return {
-      uid: '12981-2332189-42491-42',
-      email: 'test@example.com',
-      username: 'test',
-    } as UserInterface;
+  async getMe(@Headers() headers: any) {
+    const authHeader = headers['authorization'];
+
+    // Extract the JWT from the authorization header
+    const token = authHeader.split(' ')[1];
+    const payload = this.jwtService.decode(token) as object;
+    const uid = payload['sub'];
+
+    return await this.userService.findOne(uid);
   }
 }
