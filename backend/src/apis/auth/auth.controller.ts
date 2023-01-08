@@ -3,13 +3,23 @@
  * @module Auth-Controller
  */
 
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common/enums';
+import { HttpException } from '@nestjs/common/exceptions';
 import { encryptPassword, generateRandomString } from '../../utils';
 import { User, UserService } from '../user';
 import { AuthIdentity, FifaAuthProvider, RefreshToken } from './auth.schemas';
 import { FifaAuthProviderService } from './auth.service';
-import { EmailPasswordSignUpInterface, JwtPayload } from './auth.types';
+import {
+  EmailPasswordSignUpInterface,
+  JwtPayload,
+  RefreshTokenInterface,
+} from './auth.types';
 
+/**
+ * This controller is responsible for handling all authentication actions.
+ * This includes the creation of new users.
+ */
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -17,6 +27,10 @@ export class AuthController {
     private readonly fifaAuthProviderService: FifaAuthProviderService,
   ) {}
 
+  /**
+   * Register a user using email and password (Fifa Authorization),
+   * which returns a access and a refresh token.
+   */
   @Post('sign-up')
   async signUp(@Body() body: EmailPasswordSignUpInterface) {
     const identity = {
@@ -55,5 +69,34 @@ export class AuthController {
       accessToken,
       refreshToken,
     };
+  }
+
+  /**
+   * Refresh a user's access token. Returns a new signed access and a refresh token
+   */
+  @Get('refresh-token')
+  async refreshTokens(@Body() body: RefreshTokenInterface) {
+    try {
+      const identity = await this.fifaAuthProviderService.findOneByRefreshToken(
+        body.refreshToken,
+      );
+      const accessToken = await this.fifaAuthProviderService.createAccessTokens(
+        {
+          sub: identity.uid,
+        } as JwtPayload,
+      );
+      const refreshToken = await generateRandomString();
+      await this.fifaAuthProviderService.updateRefreshToken(body.refreshToken, {
+        token: refreshToken,
+        expires: new Date(Date.now() + 7 * 86400 * 1000).toISOString(),
+      } as RefreshToken);
+
+      return {
+        accessToken,
+        refreshToken,
+      };
+    } catch (e) {
+      throw new HttpException('Invalid refresh token', HttpStatus.FORBIDDEN);
+    }
   }
 }

@@ -52,3 +52,9 @@ export class EmailPasswordSignUpInterface {
   @MinLength(8)
   password: string;
 }
+
+export class RefreshTokenInterface {
+  @IsString()
+  @IsNotEmpty()
+  refreshToken: string;
+}

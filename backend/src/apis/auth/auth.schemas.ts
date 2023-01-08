@@ -7,6 +7,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
 import { SchemaTypes } from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
+import { MongooseDocument } from 'src/common';
 import { User } from '../user';
 
 @Schema()
@@ -51,3 +52,5 @@ export const FifaAuthProviderSchema = () => {
   schema.plugin(uniqueValidator);
   return schema;
 };
+
+export type FifaAuthProviderDocument = MongooseDocument<FifaAuthProvider>;

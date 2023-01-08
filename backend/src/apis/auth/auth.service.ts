@@ -7,8 +7,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { generateSalt, hash } from '../../utils';
-import { FifaAuthProvider } from './auth.schemas';
+import {
+  FifaAuthProvider,
+  FifaAuthProviderDocument,
+  RefreshToken,
+} from './auth.schemas';
 import { JwtPayload } from './auth.types';
 
 @Injectable()
@@ -25,11 +28,31 @@ export class FifaAuthProviderService {
    *
    * @param uid The unique identifier of the user
    */
-  async findOne(uid: string): Promise<FifaAuthProvider | undefined> {
+  async findOne(uid: string): Promise<FifaAuthProviderDocument | undefined> {
     try {
       return await this.model.findById({ uid: uid }).exec();
     } catch (err) {
       throw new HttpException('Identity not found', HttpStatus.NOT_FOUND);
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Verifies if a refresh token exists in the database.
+   * If the token is found, the auth identity is returned; otherwise, undefined is returned.
+   *
+   * @param uid The unique identifier of the user
+   */
+  async findOneByRefreshToken(
+    refreshToken: string,
+  ): Promise<FifaAuthProviderDocument | undefined> {
+    try {
+      return await this.model
+        .findOne({ 'refreshToken.token': refreshToken })
+        .exec();
+    } catch (err) {
+      throw new HttpException('Refresh token not found', HttpStatus.NOT_FOUND);
     }
 
     return undefined;
@@ -70,5 +93,20 @@ export class FifaAuthProviderService {
     );
 
     return accessToken;
+  }
+
+  /**
+   * Updates the old refresh token with a new token
+   *
+   * @param oldRefreshToken The old refresh token as string
+   * @param newRefreshToken The new refresh token with the expire date
+   */
+  async updateRefreshToken(
+    oldRefreshToken: string,
+    newRefreshToken: RefreshToken,
+  ): Promise<void> {
+    const identity = await this.findOneByRefreshToken(oldRefreshToken);
+    identity.refreshToken = newRefreshToken;
+    identity.save();
   }
 }
