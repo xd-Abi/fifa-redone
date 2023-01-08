@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module Auth-Controller
+ * @module Auth-Service
  */
 
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
