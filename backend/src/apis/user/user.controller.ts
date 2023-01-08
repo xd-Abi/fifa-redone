@@ -3,16 +3,18 @@
  * @module User-Controller
  */
 
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtSubject } from '../../common';
 import { UserDocument } from './user.schemas';
+import { JwtAuthGuard } from '../auth';
 
 /**
  * This controller is responsible for handling all profile actions. This includes
  * creating, updating, deleting, and retrieving profile information.
  */
 @Controller('me')
+@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
