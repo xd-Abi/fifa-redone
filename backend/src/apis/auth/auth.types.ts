@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module Auth-Interfaces
+ * @module Auth-Types
  */
 
 import {
@@ -12,7 +12,14 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator/';
+
 import { Gender } from '../user';
+
+export type JwtPayload = {
+  sub: string;
+  iat: number;
+  exp: number;
+};
 
 export class EmailPasswordSignUpInterface {
   @IsString()
@@ -44,8 +51,4 @@ export class EmailPasswordSignUpInterface {
   @IsNotEmpty()
   @MinLength(8)
   password: string;
-}
-
-export interface JwtPayload {
-  sub: string;
 }

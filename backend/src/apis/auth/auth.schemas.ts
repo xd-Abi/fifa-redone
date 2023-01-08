@@ -22,7 +22,16 @@ export class AuthIdentity {
 }
 
 @Schema()
-export class FifaAuthIdentityProvider {
+export class RefreshToken {
+  @Prop()
+  token: string;
+
+  @Prop()
+  expires: string;
+}
+
+@Schema()
+export class FifaAuthProvider {
   @Prop({ ref: User.name, type: SchemaTypes.ObjectId, unique: true })
   uid: string;
 
@@ -32,10 +41,13 @@ export class FifaAuthIdentityProvider {
 
   @Prop()
   salt: string;
+
+  @Prop({ _id: false })
+  refreshToken: RefreshToken;
 }
 
-export const FifaAuthIdentityProviderSchema = () => {
-  const schema = SchemaFactory.createForClass(FifaAuthIdentityProvider);
+export const FifaAuthProviderSchema = () => {
+  const schema = SchemaFactory.createForClass(FifaAuthProvider);
   schema.plugin(uniqueValidator);
   return schema;
 };

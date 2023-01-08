@@ -6,9 +6,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserController } from './api';
-import { User, UserSchema } from './schemas';
-import { UserService } from './services';
+import { UserController } from './user.controller';
+import { User, UserSchema } from './user.schemas';
+import { UserService } from './user.service';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { UserService } from './services';
         schema: UserSchema(),
       },
     ]),
-    JwtModule.register({}),
+    JwtModule,
   ],
   providers: [UserService],
   exports: [UserService],

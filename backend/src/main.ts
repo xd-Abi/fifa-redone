@@ -1,15 +1,22 @@
+/**
+ * @packageDocumentation
+ * @module EntryPoint
+ */
+
 import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app';
+import { AppModule } from './app.module';
 
-async function bootstrap() {
+/**
+ * Initializes and bootstraps the NestJS application.
+ *
+ * @async
+ */
+const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
-  const configService = app.get<ConfigService>(ConfigService);
-
-  app.setGlobalPrefix('api/v1/');
+  app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  await app.listen(configService.get('app.port'));
-}
+  await app.listen(8080);
+};
 
 bootstrap();

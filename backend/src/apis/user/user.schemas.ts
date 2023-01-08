@@ -4,15 +4,10 @@
  */
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
+import { MongooseDocument } from '../../common';
 import { AuthIdentity } from '../auth';
-
-export enum Gender {
-  Male = 0,
-  Female = 1,
-  Other = 2,
-}
+import { Gender } from './user.enums';
 
 @Schema({
   timestamps: true,
@@ -52,7 +47,4 @@ export const UserSchema = () => {
   return schema;
 };
 
-export type UserDocument = mongoose.Document<unknown, any, User> &
-  User & {
-    _id: mongoose.Types.ObjectId;
-  };
+export type UserDocument = MongooseDocument<User>;

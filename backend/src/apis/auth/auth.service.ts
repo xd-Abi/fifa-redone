@@ -1,18 +1,22 @@
 /**
  * @packageDocumentation
- * @module Auth-Services
+ * @module Auth-Controller
  */
 
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { FifaAuthIdentityProvider } from './schemas';
+import { generateSalt, hash } from '../../utils';
+import { FifaAuthProvider } from './auth.schemas';
+import { JwtPayload } from './auth.types';
 
 @Injectable()
-export class FifaAuthService {
+export class FifaAuthProviderService {
   constructor(
-    @InjectModel(FifaAuthIdentityProvider.name)
-    private readonly model: Model<FifaAuthIdentityProvider>,
+    @InjectModel(FifaAuthProvider.name)
+    private readonly model: Model<FifaAuthProvider>,
+    private readonly jwtService: JwtService,
   ) {}
 
   /**
@@ -21,7 +25,7 @@ export class FifaAuthService {
    *
    * @param uid The unique identifier of the user
    */
-  async findOne(uid: string): Promise<FifaAuthIdentityProvider | undefined> {
+  async findOne(uid: string): Promise<FifaAuthProvider | undefined> {
     try {
       return await this.model.findById({ uid: uid }).exec();
     } catch (err) {
@@ -37,7 +41,7 @@ export class FifaAuthService {
    *
    * @param dto The datatransfer object, containing all identity information
    */
-  async create(dto: FifaAuthIdentityProvider): Promise<string | undefined> {
+  async create(dto: FifaAuthProvider): Promise<string | undefined> {
     try {
       const result = await this.model.create(dto);
 
@@ -47,5 +51,24 @@ export class FifaAuthService {
     }
 
     return undefined;
+  }
+
+  /**
+   * Creates an signed access token using the specified payload
+   *
+   * @param payload The payload to include in the access token
+   */
+  async createAccessTokens(payload: JwtPayload): Promise<string> {
+    const accessToken = this.jwtService.sign(
+      {
+        sub: payload.sub,
+      },
+      {
+        expiresIn: '15m',
+        secret: 'at_secret',
+      },
+    );
+
+    return accessToken;
   }
 }

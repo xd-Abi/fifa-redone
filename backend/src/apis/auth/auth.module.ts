@@ -7,28 +7,23 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from '../user';
-import { AuthController } from './api';
-import {
-  FifaAuthIdentityProvider,
-  FifaAuthIdentityProviderSchema,
-} from './schemas';
-import { FifaAuthService } from './services';
+import { AuthController } from './auth.controller';
+import { FifaAuthProvider, FifaAuthProviderSchema } from './auth.schemas';
+import { FifaAuthProviderService } from './auth.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       {
-        name: FifaAuthIdentityProvider.name,
+        name: FifaAuthProvider.name,
         collection: 'auth',
-        schema: FifaAuthIdentityProviderSchema(),
+        schema: FifaAuthProviderSchema(),
       },
     ]),
-    JwtModule.register({
-      secret: `90x5d32lkjfds02fhzsre2`,
-    }),
+    JwtModule.register({}),
     UserModule,
   ],
-  providers: [FifaAuthService],
+  providers: [FifaAuthProviderService],
   controllers: [AuthController],
 })
 export class AuthModule {}
