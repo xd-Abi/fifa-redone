@@ -9,7 +9,7 @@ Before getting started, make sure you have these things installed on your system
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Node.js](https://nodejs.org/en/download/)
 
-## Setup
+# Setup
 
 To set up the project, run the following command:
 
