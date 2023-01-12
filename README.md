@@ -14,7 +14,7 @@ Before getting started, make sure you have these things installed on your system
 To set up the project, run the following command:
 
 ```
-docker-compose up
+docker-compose up -d
 ```
 
 ## Development
