@@ -1,13 +1,13 @@
 version: '3.1'
 
 services:
-  mongo:
-    image: mongo
-    restart: unless-stopped
-    container_name: mongodb
-    environment:
-      - MONGO_INITDB_DATABASE=fifa
-      - MONGO_INITDB_ROOT_USERNAME=backend
-      - MONGO_INITDB_ROOT_PASSWORD=VpGdxrtBbzs0Zgxn5o
+
+  database:
+    container_name: database
+    image: postgres
     ports:
-      - 8081:27017
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=backend
+      - POSTGRES_PASSWORD=VpGdxrtBbzs0Zgxn5o
+      - POSTGRES_DB=fifa

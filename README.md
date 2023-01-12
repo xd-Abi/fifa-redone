@@ -19,21 +19,14 @@ docker-compose up
 
 ## Development
 
-To start development, navigate to the `backend` and `frontend` directories and install the necessary npm packages for each project:
+To start development, navigate to the `frontend` directory and install the necessary npm packages:
 
 ```
-cd backend
-npm install
-
 cd ../frontend
 npm install
 ```
 
-To start the backend server, run:
-
-```
-npm run start:dev
-```
+Open the `backend` folder with an Java IDE such as IntelliJ, and then install the necessary maven packages.
 
 To start the frontend development server, run:
 
@@ -42,33 +35,3 @@ npm start
 ```
 
 You can now make changes and see them reflected in the development server.
-
-## Production
-
-To install only the necessary packages for the project, navigate to the `backend` and `frontend` directories and run the following commands:
-
-```
-cd backend
-npm install --production
-
-cd ../frontend
-npm install --production
-```
-
-This will install only the packages required for the project to run in production, rather than including development dependencies as well.
-To run the project in production, you will need to build the frontend assets and start the backend server.
-
-First, navigate to the `frontend` directory and build the assets:
-
-```
-cd frontend
-npm run build
-```
-
-This will create a `build` directory containing the optimized frontend assets.
-Next, navigate to the `backend` directory and start the server:
-
-```
-cd ../backend
-npm start
-```
