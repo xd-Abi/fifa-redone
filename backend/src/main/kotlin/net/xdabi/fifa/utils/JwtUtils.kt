@@ -2,7 +2,7 @@ package net.xdabi.fifa.utils
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.xdabi.fifa.common.data.JwtPayload
-import java.util.Base64
+import java.util.*
 
 fun String.getJwtPayload(): JwtPayload {
     val parts = this.split(".")

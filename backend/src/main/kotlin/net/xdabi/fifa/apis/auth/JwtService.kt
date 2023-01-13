@@ -4,7 +4,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import java.util.Date
+import java.util.*
 
 @Service
 class JwtService(
@@ -26,5 +26,19 @@ class JwtService(
             .setExpiration(expiration)
             .signWith(SignatureAlgorithm.HS256, secret)
             .compact()
+    }
+
+    fun validate(token: String): Boolean {
+
+        try {
+            Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+        } catch (e: Exception) {
+            println(e.message)
+            return false
+        }
+
+        return true
     }
 }

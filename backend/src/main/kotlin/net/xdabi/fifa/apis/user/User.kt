@@ -1,9 +1,9 @@
 package net.xdabi.fifa.apis.user
 
-import jakarta.persistence.*
-import lombok.Builder
-import lombok.Data
-import java.util.UUID
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import java.util.*
 
 @Entity(name = "users")
 data class User(

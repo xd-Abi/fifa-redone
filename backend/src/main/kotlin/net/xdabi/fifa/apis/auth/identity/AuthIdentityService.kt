@@ -2,7 +2,7 @@ package net.xdabi.fifa.apis.auth.identity
 
 import net.xdabi.fifa.apis.user.User
 import org.springframework.stereotype.Service
-import java.util.Optional
+import java.util.*
 
 @Service
 class AuthIdentityService(private val authIdentityRepository: AuthIdentityRepository) {

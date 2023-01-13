@@ -10,11 +10,7 @@ import net.xdabi.fifa.utils.EncryptionUtils
 import net.xdabi.fifa.utils.ResponseUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.validation.Valid
 
@@ -48,31 +44,37 @@ class AuthController(
             )
         )
 
-        authIdentityService.save(AuthIdentity(
-            UUID.randomUUID(),
-            user,
-            "fifa",
-            "Email-Password-Connection",
-            false,
-        ))
+        authIdentityService.save(
+            AuthIdentity(
+                UUID.randomUUID(),
+                user,
+                "fifa",
+                "Email-Password-Connection",
+                false,
+            )
+        )
 
-        val salt = EncryptionUtils.genSalt(10);
+        val salt = EncryptionUtils.genSalt(10)
         val hashedPassword = EncryptionUtils.hash(body.password, salt)
         val refreshToken = EncryptionUtils.hash(Math.random().toString(), EncryptionUtils.genSalt(4))
 
-        authProviderService.save(AuthProvider(
-            UUID.randomUUID(),
-            user,
-            hashedPassword,
-            salt,
-            refreshToken
-        ))
+        authProviderService.save(
+            AuthProvider(
+                UUID.randomUUID(),
+                user,
+                hashedPassword,
+                salt,
+                refreshToken
+            )
+        )
 
         val accessToken = jwtService.create(user.uid.toString())
-        return ResponseUtils.created(mapOf(
-            "accessToken" to accessToken,
-            "refreshToken" to refreshToken,
-        ))
+        return ResponseUtils.created(
+            mapOf(
+                "accessToken" to accessToken,
+                "refreshToken" to refreshToken,
+            )
+        )
     }
 
     @GetMapping("refresh")
@@ -90,9 +92,11 @@ class AuthController(
         identity.get().refreshToken = refreshToken
         authProviderService.save(identity.get())
 
-        return ResponseUtils.created(mapOf(
-            "accessToken" to accessToken,
-            "refreshToken" to refreshToken,
-        ))
+        return ResponseUtils.created(
+            mapOf(
+                "accessToken" to accessToken,
+                "refreshToken" to refreshToken,
+            )
+        )
     }
 }

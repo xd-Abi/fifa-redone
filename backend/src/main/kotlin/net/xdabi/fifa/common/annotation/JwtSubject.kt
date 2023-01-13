@@ -9,20 +9,24 @@ import org.springframework.web.method.support.ModelAndViewContainer
 
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-annotation  class JwtSubject {
-}
+annotation class JwtSubject
 
-class JwtSubjectAnnotationArgumentResolver: HandlerMethodArgumentResolver {
+class JwtSubjectAnnotationArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(JwtSubject::class.java)
     }
 
-    override fun resolveArgument(parameter: MethodParameter, mavContainer: ModelAndViewContainer?, webRequest: NativeWebRequest, binderFactory: WebDataBinderFactory?): Any? {
+    override fun resolveArgument(
+        parameter: MethodParameter,
+        mavContainer: ModelAndViewContainer?,
+        webRequest: NativeWebRequest,
+        binderFactory: WebDataBinderFactory?
+    ): Any {
         val authorizationHeader = webRequest.getHeader("Authorization")
             ?: throw IllegalArgumentException("Authorization header not found")
 
-        val token = authorizationHeader.replace("Berear ", "")
+        val token = authorizationHeader.replace("Bearer ", "")
         val claims = token.getJwtPayload()
 
         return claims.subject

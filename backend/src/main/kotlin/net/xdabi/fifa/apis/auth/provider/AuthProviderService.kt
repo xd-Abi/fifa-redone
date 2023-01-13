@@ -1,6 +1,5 @@
 package net.xdabi.fifa.apis.auth.provider
 
-import net.xdabi.fifa.apis.user.User
 import org.springframework.stereotype.Service
 import java.util.*
 

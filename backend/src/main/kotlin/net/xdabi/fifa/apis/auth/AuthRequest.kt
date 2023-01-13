@@ -11,11 +11,11 @@ data class AuthRegisterRequestBody(
     val email: String,
 
     @NotBlank
-    @Size(max =  75)
+    @Size(max = 75)
     val firstname: String,
 
     @NotBlank
-    @Size(max =  75)
+    @Size(max = 75)
     val lastname: String,
 
     @NotBlank

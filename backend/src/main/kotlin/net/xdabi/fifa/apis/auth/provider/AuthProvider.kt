@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import java.util.*
 
-
 @Entity(name = "auth")
 data class AuthProvider(
     @Id
@@ -24,5 +23,5 @@ data class AuthProvider(
     var refreshToken: String
 ) {
 
-    private constructor(): this(UUID.randomUUID(), null, "", "", "")
+    private constructor() : this(UUID.randomUUID(), null, "", "", "")
 }
