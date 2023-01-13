@@ -23,17 +23,4 @@ class UserController(@Autowired private val userService: UserService) {
 
         return ResponseEntity.ok().body(user.get())
     }
-
-    @PostMapping
-    fun createMe() {
-        userService.save(
-            User(
-                UUID.randomUUID(),
-                "test",
-                "test@gmail.com",
-                "22",
-                Gender.MALE,
-            )
-        )
-    }
 }

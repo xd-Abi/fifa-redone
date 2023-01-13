@@ -7,8 +7,8 @@ import java.util.*
 @Service
 class AuthProviderService(private val authProviderRepository: AuthProviderRepository) {
 
-    fun findByUser(user: User): Optional<AuthProvider> {
-        return authProviderRepository.findByUser(user)
+    fun findByRefreshToken(refreshToken: String): Optional<AuthProvider> {
+        return authProviderRepository.findByRefreshToken(refreshToken)
     }
 
     fun save(authProvider: AuthProvider): AuthProvider {

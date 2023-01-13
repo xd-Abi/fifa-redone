@@ -6,5 +6,5 @@ import java.util.*
 
 interface AuthProviderRepository : JpaRepository<AuthProvider, UUID> {
 
-    fun findByUser(user: User): Optional<AuthProvider>
+    fun findByRefreshToken(refreshToken: String): Optional<AuthProvider>
 }

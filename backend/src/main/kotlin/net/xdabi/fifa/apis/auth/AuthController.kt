@@ -10,6 +10,7 @@ import net.xdabi.fifa.utils.EncryptionUtils
 import net.xdabi.fifa.utils.ResponseUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -40,6 +41,8 @@ class AuthController(
                 UUID.randomUUID(),
                 body.username,
                 body.email,
+                body.firstname,
+                body.lastname,
                 body.birthdate,
                 body.gender,
             )
@@ -55,7 +58,7 @@ class AuthController(
 
         val salt = EncryptionUtils.genSalt(10);
         val hashedPassword = EncryptionUtils.hash(body.password, salt)
-        val refreshToken = EncryptionUtils.hash(Math.random().toString() + salt, EncryptionUtils.genSalt(4))
+        val refreshToken = EncryptionUtils.hash(Math.random().toString(), EncryptionUtils.genSalt(4))
 
         authProviderService.save(AuthProvider(
             UUID.randomUUID(),
@@ -66,6 +69,27 @@ class AuthController(
         ))
 
         val accessToken = jwtService.create(user.uid.toString())
+        return ResponseUtils.created(mapOf(
+            "accessToken" to accessToken,
+            "refreshToken" to refreshToken,
+        ))
+    }
+
+    @GetMapping("refresh")
+    fun refreshTokens(@Valid @RequestBody body: RefreshTokenRequestBody): ResponseEntity<Any> {
+
+        val identity = authProviderService.findByRefreshToken(body.refreshToken)
+
+        if (identity.isEmpty) {
+            return ResponseUtils.badRequest("Refresh token not found")
+        }
+
+        val refreshToken = EncryptionUtils.hash(Math.random().toString(), EncryptionUtils.genSalt(4))
+        val accessToken = jwtService.create(identity.get().user?.uid.toString())
+
+        identity.get().refreshToken = refreshToken
+        authProviderService.save(identity.get())
+
         return ResponseUtils.created(mapOf(
             "accessToken" to accessToken,
             "refreshToken" to refreshToken,

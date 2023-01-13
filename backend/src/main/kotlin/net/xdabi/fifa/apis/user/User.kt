@@ -14,13 +14,15 @@ data class User(
     val username: String,
     @Column(name = "email", unique = true)
     val email: String,
+    val firstname: String,
+    val lastname: String,
     val birthdate: String,
     val gender: Gender,
     val verified: Boolean = false,
     val picture: String? = null,
 ) {
 
-    private constructor() : this(UUID.randomUUID(), "", "", "", Gender.OTHER, false, null)
+    private constructor() : this(UUID.randomUUID(), "", "", "", "", "", Gender.OTHER, false, null)
 }
 
 enum class Gender {

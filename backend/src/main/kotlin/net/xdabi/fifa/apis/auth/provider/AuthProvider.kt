@@ -21,7 +21,7 @@ data class AuthProvider(
 
     val salt: String,
 
-    val refreshToken: String
+    var refreshToken: String
 ) {
 
     private constructor(): this(UUID.randomUUID(), null, "", "", "")
