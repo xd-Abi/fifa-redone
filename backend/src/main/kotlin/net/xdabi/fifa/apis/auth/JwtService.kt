@@ -35,7 +35,6 @@ class JwtService(
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
         } catch (e: Exception) {
-            println(e.message)
             return false
         }
 
