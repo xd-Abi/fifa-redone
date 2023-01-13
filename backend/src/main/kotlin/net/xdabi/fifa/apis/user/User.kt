@@ -1,6 +1,8 @@
 package net.xdabi.fifa.apis.user
 
 import jakarta.persistence.*
+import lombok.Builder
+import lombok.Data
 import java.util.UUID
 
 @Entity(name = "users")
@@ -18,7 +20,7 @@ data class User(
     val picture: String? = null,
 ) {
 
-    private constructor(randomUUID: UUID) : this(UUID.randomUUID(), "", "", "", Gender.OTHER, false, null)
+    private constructor() : this(UUID.randomUUID(), "", "", "", Gender.OTHER, false, null)
 }
 
 enum class Gender {

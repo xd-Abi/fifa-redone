@@ -15,3 +15,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: false
     show-sql: false
+security:
+  jwt:
+    token:
+      secret: B3fX8uuAr1Vfs2
+      expiration: 900000 # 15 minutes

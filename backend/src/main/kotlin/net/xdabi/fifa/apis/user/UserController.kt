@@ -14,9 +14,14 @@ import java.util.*
 class UserController(@Autowired private val userService: UserService) {
 
     @GetMapping
-    fun getMe(@JwtSubject uid: String): ResponseEntity<List<User>> {
+    fun getMe(@JwtSubject uid: String): ResponseEntity<User?> {
+        val user = userService.findById(uid)
 
-        return ResponseEntity.ok().body(userService.findAll())
+        if (user.isEmpty) {
+            return ResponseEntity.badRequest().body(null)
+        }
+
+        return ResponseEntity.ok().body(user.get())
     }
 
     @PostMapping

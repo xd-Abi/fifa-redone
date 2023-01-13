@@ -6,10 +6,6 @@ import java.util.*
 @Service
 class UserService (private val userRepository: UserRepository) {
 
-    fun findAll(): List<User> {
-        return userRepository.findAll();
-    }
-
     fun findById(uid: String): Optional<User> {
         return userRepository.findById(UUID.fromString(uid));
     }
@@ -22,7 +18,7 @@ class UserService (private val userRepository: UserRepository) {
         return userRepository.findByEmail(email)
     }
 
-    fun save(user: User) {
-        userRepository.save(user)
+    fun save(user: User): User {
+        return userRepository.save(user)
     }
 }

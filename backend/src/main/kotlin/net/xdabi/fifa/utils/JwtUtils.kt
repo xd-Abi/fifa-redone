@@ -2,6 +2,7 @@ package net.xdabi.fifa.utils
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.xdabi.fifa.common.data.JwtPayload
+import org.springframework.http.ResponseEntity
 import java.util.Base64
 
 fun String.getJwtPayload(): JwtPayload {
