@@ -43,5 +43,9 @@ class ResponseUtils {
         fun created(body: Any): ResponseEntity<Any> {
             return ResponseEntity.badRequest().body(body)
         }
+
+        fun ok(body: Any): ResponseEntity<Any> {
+            return ResponseEntity.ok().body(body)
+        }
     }
 }
