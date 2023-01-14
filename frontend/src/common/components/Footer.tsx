@@ -1,7 +1,7 @@
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import Container from "./Container";
-import { EnvConfig } from "../config";
+import { Config } from "../config";
 
 const Footer = () => {
   return (
@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="col-12 md:col mt-3">
             <InputText
               className="p-inputgroup"
-              placeholder="e.g. hello@fifa.com"
+              placeholder={`e.g. ${Config.emails.hello}`}
               required
             />
           </div>
@@ -30,33 +30,28 @@ const Footer = () => {
             <p className="uppercase font-bold">Explore</p>
           </div>
           <div className="col-6 md:col">
-            <p className="uppercase font-bold">Learn</p>
+            <p className="uppercase font-bold">Partners</p>
+            {Config.links.partners.map((partner) => (
+              <a href={partner.url} key={partner.name}>
+                <p className="text-alt">{partner.name}</p>
+              </a>
+            ))}
           </div>
           <div className="col-6 md:col">
             <p className="uppercase font-bold">Social</p>
-            <a href={EnvConfig.links.social.instagram}>
-              <p className="text-alt">Instagram</p>
-            </a>
-            <a href={EnvConfig.links.social.twitter}>
-              <p className="text-alt">Twitter</p>
-            </a>
-            <a href={EnvConfig.links.social.facebook}>
-              <p className="text-alt">Facebook</p>
-            </a>
-            <a href={EnvConfig.links.social.youtube}>
-              <p className="text-alt">Youtube</p>
-            </a>
-            <a href={EnvConfig.links.social.tiktok}>
-              <p className="text-alt">Tiktok</p>
-            </a>
+            {Config.links.socials.map((social) => (
+              <a href={social.url} key={social.provider}>
+                <p className="text-alt">{social.provider}</p>
+              </a>
+            ))}
           </div>
           <div className="col-6 md:col">
             <p className="uppercase font-bold">Get in touch</p>
-            <a href={`mailto:${EnvConfig.emails.hello}`}>
-              <p className="text-alt">{EnvConfig.emails.hello}</p>
+            <a href={`mailto:${Config.emails.hello}`}>
+              <p className="text-alt">{Config.emails.hello}</p>
             </a>
-            <a href={`mailto:${EnvConfig.emails.press}`}>
-              <p className="text-alt">{EnvConfig.emails.press}</p>
+            <a href={`mailto:${Config.emails.press}`}>
+              <p className="text-alt">{Config.emails.press}</p>
             </a>
           </div>
         </div>

@@ -1,3 +1,3 @@
-import EnvConfig from "./env.dev";
+import { Config } from "./Config";
 
-export { EnvConfig };
+export { Config };
