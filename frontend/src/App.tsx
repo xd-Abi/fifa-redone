@@ -6,14 +6,10 @@ import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 
 import "./common/styles/App.css";
+import { Home } from "./views";
 
 const App = () => {
-  return (
-    <>
-      <AppBar />
-      <Footer />
-    </>
-  );
+  return <Home />;
 };
 
 export default App;

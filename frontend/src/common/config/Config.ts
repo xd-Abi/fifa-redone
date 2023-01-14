@@ -4,6 +4,20 @@ export const Config = {
     press: "press@fifa.com",
   },
   links: {
+    explore: [
+      {
+        name: "Tournament",
+        url: "https://www.fifa.com/fifaplus/de/tournaments",
+      },
+      {
+        name: "Womans Football",
+        url: "https://www.fifa.com/de/womens-football",
+      },
+      {
+        name: "Development",
+        url: "https://www.fifa.com/de/football-development",
+      },
+    ],
     socials: [
       {
         provider: "Instagram",

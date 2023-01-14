@@ -5,6 +5,7 @@
   --surface-2: #0b0d0e;
   --surface-3: #111315;
   --surface-4: #1a1d1f;
+  --navbar-color: #0b0d0ee0;
   --primary-color: #2a85ff;
   --primary-color-dark: #216aca;
   --text-color: #ffffff;
@@ -18,6 +19,25 @@ html {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
+}
+
+.app-header {
+  position: fixed;
+  width: 100%;
+  background-color: var(--navbar-color);
+  z-index: 10;
+  backdrop-filter: blur(9px);
+}
+
+.title {
+  font-weight: bold;
+  font-size: 44px !important;
+}
+
+.description {
+  color: var(--text-color-alt);
+  font-size: 17px;
+  line-height: 1.8;
 }
 
 .text-alt {
@@ -34,22 +54,22 @@ a .text-alt:hover {
 }
 
 .p-menubar {
-  background: var(--surface-2);
+  background-color: transparent;
   border: var(--surface-2);
 }
 
 .p-menuitem {
-  background: var(--surface-2);
+  background-color: transparent;
   border: var(--surface-2);
 }
 
 .p-menubar .p-menubar-root-list {
-  background: var(--surface-3);
+  background-color: transparent;
   border: var(--surface-3);
 }
 
 .p-menubar .p-submenu-list {
-  background: var(--surface-4);
+  background-color: transparent;
   border: var(--surface-4);
 }
 

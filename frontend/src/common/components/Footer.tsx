@@ -32,6 +32,11 @@ const Footer = () => {
         <div className="grid mt-5">
           <div className="col-6 md:col">
             <p className="uppercase font-bold">Explore</p>
+            {Config.links.explore.map((link) => (
+              <a href={link.url} key={link.name}>
+                <p className="text-alt">{link.name}</p>
+              </a>
+            ))}
           </div>
           <div className="col-6 md:col">
             <p className="uppercase font-bold">Partners</p>

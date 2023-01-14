@@ -20,17 +20,19 @@ const AppBar = () => {
   ];
 
   return (
-    <Container padding={false}>
-      <div className="grid pr-3 pl-3">
-        <div className="col">
-          <AppLogo size={80} />
+    <div className="app-header">
+      <Container padding={false}>
+        <div className="grid pr-3 pl-3">
+          <div className="col">
+            <AppLogo size={80} />
+          </div>
+          <div className="col-5 mt-3 md:col-9 md:mt-0 justify-content-start md:flex md:justify-content-center">
+            <Menubar model={items} />
+          </div>
+          <div className="col"></div>
         </div>
-        <div className="col-5 mt-3 md:col-9 md:mt-0 justify-content-start md:flex md:justify-content-center">
-          <Menubar model={items} />
-        </div>
-        <div className="col"></div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 
