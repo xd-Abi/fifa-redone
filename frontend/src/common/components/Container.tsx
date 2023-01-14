@@ -4,7 +4,7 @@ interface IContainerProps {
 
 const Container = (props: IContainerProps) => {
   return (
-    <div className="grid">
+    <div className="grid p-3">
       <div className="col-0 md:col" />
       <div className="col-12 md:col-9">{props.children}</div>
       <div className="col-0 md:col" />

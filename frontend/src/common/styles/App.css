@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --surface-1: #070809;
+  --surface-2: #0b0d0e;
+  --surface-3: #111315;
+  --surface-4: #1a1d1f;
+  --primary-color: #2a85ff;
+  --primary-color-dark: #216aca;
+  --text-color: #ffffff;
+  --text-color-alt: #5c636b;
+}
+
+body,
+html {
+  background-color: var(--surface-2);
+  font-family: "Inter", sans-serif;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.text-alt {
+  color: var(--text-color-alt);
+}
+
+a:link,
+a:visited .text-alt {
+  text-decoration: none !important;
+}
+
+a .text-alt:hover {
+  color: var(--text-color);
+}
+
+.p-button {
+  background: var(--primary-color) !important;
+  border: var(--primary-color) !important;
+  color: white !important;
+}
+
+.p-button:hover {
+  background: var(--primary-color-dark) !important;
+  border: var(--primary-color-dark) !important;
+  color: white !important;
+}
+
+.p-inputtext {
+  background: var(--surface-4) !important;
+  border: var(--surface-4) !important;
+}
+
+.divider {
+  background: var(--surface-4);
+  height: 1px;
+}
+
+.footer {
+  background-color: var(--surface-1);
+}
+
+::-moz-selection {
+  background: var(--primary-color);
+}
+
+::selection {
+  background: var(--primary-color);
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color-dark);
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--primary-color-dark);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: transparent;
+}
+::-webkit-scrollbar-track:active {
+  background: transparent;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
