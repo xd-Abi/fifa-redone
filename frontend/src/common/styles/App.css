@@ -33,6 +33,33 @@ a .text-alt:hover {
   color: var(--text-color);
 }
 
+.p-menubar {
+  background: var(--surface-2);
+  border: var(--surface-2);
+}
+
+.p-menuitem {
+  background: var(--surface-2);
+  border: var(--surface-2);
+}
+
+.p-menubar .p-menubar-root-list {
+  background: var(--surface-3);
+  border: var(--surface-3);
+}
+
+.p-menubar .p-submenu-list {
+  background: var(--surface-4);
+  border: var(--surface-4);
+}
+
+@media screen and (max-width: 960px) {
+  .p-menuitem {
+    background: var(--surface-3);
+    border: var(--surface-3);
+  }
+}
+
 .p-button {
   background: var(--primary-color) !important;
   border: var(--primary-color) !important;

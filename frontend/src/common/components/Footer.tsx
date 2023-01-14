@@ -1,12 +1,13 @@
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import AppLogo from "./AppLogo";
 import Container from "./Container";
 import { Config } from "../config";
 
 const Footer = () => {
   return (
-    <div className="footer pt-7 pb-7">
-      <Container>
+    <div className="footer pt-7 pb-4">
+      <Container padding>
         <div className="grid">
           <div className="col-12 md:col-7 flex justify-content-center md:justify-content-start">
             <h1 className="font-bold text-center">
@@ -17,11 +18,14 @@ const Footer = () => {
             <InputText
               className="p-inputgroup"
               placeholder={`e.g. ${Config.emails.hello}`}
-              required
             />
           </div>
           <div className="col-12 md:col-2 mt-3">
-            <Button className="p-inputgroup" label="Join Mailing List" />
+            <Button
+              className="p-inputgroup"
+              label="Join Mailing List"
+              type="submit"
+            />
           </div>
         </div>
         <div className="divider mt-6 mb-6" />
@@ -57,10 +61,7 @@ const Footer = () => {
         </div>
         <div className="divider mt-6 mb-6" />
         <div className="grid flex justify-content-center md:justify-content-start">
-          <img
-            src={`${process.env.PUBLIC_URL}/images/fifa-logo.svg`}
-            width={150}
-          />
+          <AppLogo size={150} />
         </div>
       </Container>
     </div>
