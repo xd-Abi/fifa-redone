@@ -23,15 +23,13 @@ To start development, navigate to the `frontend` directory and install the neces
 
 ```
 cd ../frontend
-npm install
+yarn install
 ```
 
-Open the `backend` folder with an Java IDE such as IntelliJ, and then install the necessary maven packages.
+Open the `backend` folder with an Java IDE such as IntelliJ, and then install the necessary maven packages. Start the backend using your IDE
 
 To start the frontend development server, run:
 
 ```
-npm start
+yarn run dev
 ```
-
-You can now make changes and see them reflected in the development server.
