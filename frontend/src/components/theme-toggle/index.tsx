@@ -1,28 +1,11 @@
 import React from "react";
-import { CSS, styled, useTheme } from "@nextui-org/react";
+import { useTheme } from "@nextui-org/react";
 import { useTheme as useNextTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "../icons";
 import { useIsMounted } from "@/hooks";
+import { StyledThemeToggleButton } from "./styled";
+import { MoonIcon, SunIcon } from "../icons";
 
-interface Props {
-  className?: string;
-  css?: CSS;
-}
-
-const StyledButton = styled("button", {
-  dflex: "center",
-  size: "auto",
-  cursor: "pointer",
-  background: "transparent",
-  border: "none",
-  padding: 0,
-  color: "$gray600",
-  "@xsMax": {
-    px: "$2",
-  },
-});
-
-const ThemeToggle = ({ ...props }: Props) => {
+const ThemeToggle = () => {
   const isMounted = useIsMounted();
   const { setTheme } = useNextTheme();
   const { isDark } = useTheme();
@@ -31,18 +14,17 @@ const ThemeToggle = ({ ...props }: Props) => {
     setTheme(isDark ? "light" : "dark");
   };
 
-  if (!isMounted) {
-    return <div></div>;
-  }
-
   return (
-    <StyledButton
-      aria-label="toggle a light and dark color scheme"
-      onClick={handleToggleTheme}
-      {...props}
-    >
-      {isDark ? <SunIcon size={20} /> : <MoonIcon size={20} />}
-    </StyledButton>
+    <React.Fragment>
+      {isMounted && (
+        <StyledThemeToggleButton
+          aria-label="toggle a light and dark color scheme"
+          onClick={handleToggleTheme}
+        >
+          {isDark ? <SunIcon size={20} /> : <MoonIcon size={20} />}
+        </StyledThemeToggleButton>
+      )}
+    </React.Fragment>
   );
 };
 

@@ -1,9 +1,10 @@
-export { default as Badge } from "./banner";
-export * from "./home";
+export { default as AppFooter } from "./app-footer/footer";
+export { default as AppLogo } from "./app-logo";
+export { default as AppNavbar } from "./app-navbar";
+export { default as Head } from "./head";
 export * from "./icons";
-export { default as Logo } from "./logo";
-export { default as MobileNavigation } from "./mobile-navigation";
 export { default as NextCallout } from "./next-callout";
 export * from "./primitives";
+export * from "./sign-up";
+export * from "./team-rankings";
 export { default as ThemeToggle } from "./theme-toggle";
-export { default as UserDropdown } from "./user-dropdown";

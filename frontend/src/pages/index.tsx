@@ -1,53 +1,21 @@
-import { LeaderboardSection, QatarWorldCupSection } from "@/components";
-import DefaultLayout from "@/layouts/default";
-import {
-  Button,
-  Card,
-  Col,
-  Grid,
-  Row,
-  Text,
-  Spacer,
-  Container,
-} from "@nextui-org/react";
+import React from "react";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import { AppFooter, AppNavbar, Head } from "@/components";
 
-const Home = () => {
+const inter = Inter({ subsets: ["latin"] });
+
+export default function Home() {
   return (
-    <DefaultLayout title="Home - FIFA">
-      <Container
-        lg
-        css={{
-          position: "relative",
-          minHeight: "65vh",
-          "@mdMax": {
-            overflowX: "hidden",
-          },
-        }}
-      >
-        <QatarWorldCupSection />
-      </Container>
-      <Container
-        lg
-        css={{
-          position: "relative",
-          minHeight: "70vh",
-          "@mdMax": {
-            overflowX: "hidden",
-          },
-        }}
-      >
-        <LeaderboardSection />
-      </Container>
-      <Spacer
-        y={10}
-        css={{
-          "@lg": {
-            display: "none",
-          },
-        }}
+    <React.Fragment>
+      <Head
+        title="Home - FIFA"
+        description="A redone version of the offical site"
       />
-    </DefaultLayout>
+      <AppNavbar />
+      <main></main>
+      <AppFooter />
+    </React.Fragment>
   );
-};
-
-export default Home;
+}

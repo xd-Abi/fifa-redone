@@ -1,6 +1,6 @@
 import { styled, CSS } from "@nextui-org/react";
 
-export interface IconProps {
+export type IconProps = {
   fill?: string;
   size?: string | number;
   height?: string | number;
@@ -9,12 +9,13 @@ export interface IconProps {
   onClick?: () => void;
   className?: string;
   css?: CSS;
-}
+};
 
 export const Icon = styled("svg", {});
 
-export { default as GithubIcon } from "./Github";
-export { default as MoonIcon } from "./Moon";
-export { default as NextIcon } from "./Next";
-export { default as SunIcon } from "./Sun";
-export { default as TagIcon } from "./Tag";
+export { default as ArrowLeftIcon } from "./arrow-left";
+export { default as GithubIcon } from "./github";
+export { default as MoonIcon } from "./moon";
+export { default as NextIcon } from "./next";
+export { default as SunIcon } from "./sun";
+export { default as TagIcon } from "./tag";

@@ -1,33 +1,30 @@
-import { Route } from "@/lib/route";
-import { isActiveLink } from "@/utils";
-import { Link, Navbar as NextNavbar } from "@nextui-org/react";
+import React from "react";
+import { Route } from "../app-navbar/routes";
+import { Navbar } from "@nextui-org/react";
+import { StyledAppNavbarLink } from "../app-navbar/styled";
 
-interface Props {
+type Props = {
   active: string;
   routes: Route[];
-}
+};
 
 const MobileNavigation = ({ active, routes }: Props) => {
   return (
-    <>
-      <NextNavbar.Toggle showIn="md" />
-      <NextNavbar.Collapse>
+    <React.Fragment>
+      <Navbar.Toggle showIn="md" />
+      <Navbar.Collapse>
         {routes.map((route) => (
-          <NextNavbar.CollapseItem key={route.title}>
-            <Link
+          <Navbar.CollapseItem key={route.title}>
+            <StyledAppNavbarLink
               href={route.href}
-              css={{
-                color: isActiveLink(active, route.href)
-                  ? "$foreground"
-                  : "$gray600",
-              }}
+              active={route.href === active}
             >
               {route.title}
-            </Link>
-          </NextNavbar.CollapseItem>
+            </StyledAppNavbarLink>
+          </Navbar.CollapseItem>
         ))}
-      </NextNavbar.Collapse>
-    </>
+      </Navbar.Collapse>
+    </React.Fragment>
   );
 };
 
