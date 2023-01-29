@@ -7,6 +7,12 @@ export const showErrorToast = (message: string) => {
   });
 };
 
+export const showSuccessToast = (message: string) => {
+  toast(message, {
+    type: "success",
+  });
+};
+
 const Toast = () => {
   return <ToastContainer draggable />;
 };

@@ -5,11 +5,13 @@ export enum Gender {
 }
 
 export type User = {
+  uid?: string;
   username: string;
   email: string;
   firstname: string;
   lastname: string;
   birthdate: string;
   gender: Gender;
-  verified: string;
+  picture?: string;
+  verified?: boolean;
 };

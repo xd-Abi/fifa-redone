@@ -14,12 +14,12 @@ data class User(
     val username: String,
     @Column(name = "email", unique = true)
     val email: String,
-    val firstname: String,
-    val lastname: String,
-    val birthdate: String,
-    val gender: Gender,
-    val verified: Boolean = false,
-    val picture: String? = null,
+    var firstname: String,
+    var lastname: String,
+    var birthdate: String,
+    var gender: Gender,
+    var verified: Boolean = false,
+    var picture: String? = null,
 ) {
 
     private constructor() : this(UUID.randomUUID(), "", "", "", "", "", Gender.OTHER, false, null)
