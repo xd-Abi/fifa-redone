@@ -30,7 +30,6 @@ export class AuthAPI extends BaseAPI {
       },
     })
       .then((response) => {
-        console.log(response);
         localStorage.setItem("fifa-refresh-token", response.data.refreshToken);
         return response.data.accessToken;
       })

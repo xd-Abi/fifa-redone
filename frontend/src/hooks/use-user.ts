@@ -1,10 +1,10 @@
 import { User } from "@/lib/models";
-import { UserContext } from "@/provider";
-import { useContext } from "react";
+import { GlobalStoreType } from "@/lib/store";
+import { useSelector } from "react-redux";
 
 const useUser = (): User | undefined => {
-  const context = useContext(UserContext);
-  return context.user;
+  const userStore = useSelector((state: GlobalStoreType) => state.user);
+  return userStore.user;
 };
 
 export default useUser;

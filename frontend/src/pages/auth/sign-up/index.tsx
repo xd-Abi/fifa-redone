@@ -10,14 +10,24 @@ import { SignUpFormType } from "@/components/sign-up/form";
 import { Spacer, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { getAuthAPI } from "@/lib/api";
+import { useDispatch } from "react-redux";
+import { userChange } from "@/lib/store/user";
 
 const SignUp = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const onSubmit = (data: SignUpFormType) => {
+  const onSubmit = async (data: SignUpFormType) => {
     getAuthAPI()
       .registerUser(data)
       .then((e) => {
+        dispatch(
+          userChange({
+            user: {
+              ...data,
+            },
+          })
+        );
         router.push("/");
       })
       .catch((err) => {

@@ -1,15 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
+import { Provider as GlobalStoreProvider, useDispatch } from "react-redux";
 import type { AppProps } from "next/app";
 
 import { darkTheme, lightTheme } from "@/themes/shared";
-import { UserContextType, UserProvider } from "@/provider";
 import "@/styles/globals.css";
 import { getAuthAPI, getMeAPI } from "@/lib/api";
+import GlobalStore from "@/lib/store";
+import { userChange } from "@/lib/store/user";
+
+const AppProvidersWrapper = ({ ...props }: AppProps & any) => {
+  return (
+    <React.Fragment>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        value={{
+          light: lightTheme.className,
+          dark: darkTheme.className,
+        }}
+      >
+        <NextUIProvider>
+          <GlobalStoreProvider store={GlobalStore}>
+            <App {...props} />
+          </GlobalStoreProvider>
+        </NextUIProvider>
+      </ThemeProvider>
+    </React.Fragment>
+  );
+};
 
 const App = ({ Component, pageProps }: AppProps & any) => {
-  const [user, setUser] = useState({} as UserContextType);
+  const dispatch = useDispatch();
+
+  const loadUser = async () => {
+    const user = getAuthAPI().isUserSignedIn()
+      ? await getMeAPI().getMe()
+      : undefined;
+
+    dispatch(userChange({ user }));
+  };
 
   useEffect(() => {
     console.log(
@@ -28,37 +59,10 @@ There is nothing of interest here and
       "color:#FF5160;font-size:20px;"
     );
 
-    const loadUser = async () => {
-      const user = getAuthAPI().isUserSignedIn()
-        ? await getMeAPI().getMe()
-        : undefined;
-
-      setUser({
-        user: user,
-      });
-    };
-
     loadUser();
   }, []);
 
-  return (
-    <React.Fragment>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        value={{
-          light: lightTheme.className,
-          dark: darkTheme.className,
-        }}
-      >
-        <NextUIProvider>
-          <UserProvider value={user}>
-            <Component {...pageProps} />
-          </UserProvider>
-        </NextUIProvider>
-      </ThemeProvider>
-    </React.Fragment>
-  );
+  return <Component {...pageProps} />;
 };
 
-export default App;
+export default AppProvidersWrapper;
