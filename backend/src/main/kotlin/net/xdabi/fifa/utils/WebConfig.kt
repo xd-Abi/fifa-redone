@@ -29,7 +29,8 @@ class WebConfig(
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
             .allowedHeaders("*")
-            .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
+            .allowedOrigins("*")
+            .allowedMethods("*");
     }
 
     override fun addInterceptors(registry: InterceptorRegistry) {

@@ -6,9 +6,9 @@ import type { AppProps } from "next/app";
 import { darkTheme, lightTheme } from "@/themes/shared";
 import { UserContextType, UserProvider } from "@/provider";
 import "@/styles/globals.css";
-import { getMe } from "@/lib/api";
+import { getAuthAPI, getMeAPI } from "@/lib/api";
 
-const App = ({ Component, pageProps, me }: AppProps & any) => {
+const App = ({ Component, pageProps }: AppProps & any) => {
   const [user, setUser] = useState({} as UserContextType);
 
   useEffect(() => {
@@ -28,11 +28,17 @@ There is nothing of interest here and
       "color:#FF5160;font-size:20px;"
     );
 
-    getMe().then((data) => {
+    const loadUser = async () => {
+      const user = getAuthAPI().isUserSignedIn()
+        ? await getMeAPI().getMe()
+        : undefined;
+
       setUser({
-        user: data,
+        user: user,
       });
-    });
+    };
+
+    loadUser();
   }, []);
 
   return (

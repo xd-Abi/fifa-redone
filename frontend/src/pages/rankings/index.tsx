@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { Container, Spacer } from "@nextui-org/react";
 import { AppFooter, AppNavbar, Head } from "@/components";
-import { getRankings, GetRankingsResponse } from "@/lib/api";
 import TeamRankingsTable from "@/components/team-rankings/table";
 import TeamRankingHero from "@/components/team-rankings/hero";
+import { Team } from "@/lib/models";
+import { getRankingsAPI } from "@/lib/api";
+
+type Rankings = {
+  mens: Team[];
+  womens: Team[];
+};
 
 type Props = {
-  rankings: GetRankingsResponse;
+  rankings: Rankings;
 };
 
 export const getServerSideProps = async () => {
-  const rankings = await getRankings();
+  const rankings: Rankings = {
+    mens: await getRankingsAPI().getMensRanking(),
+    womens: await getRankingsAPI().getWomensRanking(),
+  };
 
   return {
     props: {

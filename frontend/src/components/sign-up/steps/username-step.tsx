@@ -1,5 +1,5 @@
 import Input from "@/components/input";
-import { checkUsername } from "@/lib/api";
+import { getAuthAPI } from "@/lib/api";
 import { Spacer } from "@nextui-org/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -22,11 +22,12 @@ const SignUpUsernameStep = ({ initialValues, onSubmit }: Props) => {
       username: Yup.string().required("Username is required"),
     }),
     onSubmit: (data: UsernameFormType) => {
-      checkUsername(data.username)
-        .then((response) => {
+      getAuthAPI()
+        .isUsernameUsed(data.username)
+        .then(() => {
           onSubmit(data);
         })
-        .catch((err) => {
+        .catch(() => {
           formik.setErrors({ username: "Username already exists" });
         });
     },

@@ -2,9 +2,9 @@ import { Spacer } from "@nextui-org/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "@/components/input";
+import { getAuthAPI } from "@/lib/api";
 import { StyledForm, StyledFormSubmitButton } from "../styled";
 import { SignUpSubtitle } from "../utils";
-import { checkEmail } from "@/lib/api";
 
 type EmailFormType = {
   email: string;
@@ -25,11 +25,12 @@ const SignUpEmailStep = ({ initialValues, onSubmit, onBack }: Props) => {
         .email("Email is not valid"),
     }),
     onSubmit: (data: EmailFormType) => {
-      checkEmail(data.email)
-        .then((response) => {
+      getAuthAPI()
+        .isEmailUsed(data.email)
+        .then(() => {
           onSubmit(data);
         })
-        .catch((err) => {
+        .catch(() => {
           formik.setErrors({ email: "Email already exists" });
         });
     },
