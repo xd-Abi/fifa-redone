@@ -16,6 +16,9 @@ const UserDropdown = () => {
       case "sign-in":
         router.push("/auth/sign-in");
         break;
+      case "profile":
+        router.push("/profile");
+        break;
       case "logout":
         logout();
         break;
@@ -31,7 +34,7 @@ const UserDropdown = () => {
               as="button"
               color="primary"
               size="md"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              src="/images/def-avatar.png"
             />
           </Dropdown.Trigger>
         </Navbar.Item>
@@ -41,7 +44,7 @@ const UserDropdown = () => {
             onAction={handleDropdownAction}
           >
             <Dropdown.Item
-              key="profile"
+              key="signed-in-as"
               css={{ height: "$18" }}
               textValue="Sign Up"
             >
@@ -53,8 +56,8 @@ const UserDropdown = () => {
                 {user.email}
               </Text>
             </Dropdown.Item>
-            <Dropdown.Item key="settings" withDivider>
-              Settings
+            <Dropdown.Item key="profile" withDivider>
+              My Profile
             </Dropdown.Item>
             <Dropdown.Item key="help-and-feedback">
               Help & Feedback

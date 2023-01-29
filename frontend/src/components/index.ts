@@ -8,6 +8,7 @@ export { default as Loading } from "./loading";
 export { default as Mounted } from "./mounted";
 export { default as NextCallout } from "./next-callout";
 export * from "./primitives";
+export * from "./profile";
 export * from "./route";
 export * from "./sign-in";
 export * from "./sign-up";

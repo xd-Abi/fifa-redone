@@ -38,7 +38,6 @@ const SignUp = () => {
       <AppNavbar />
       <main>
         <Toast />
-
         <Container lg css={{ minHeight: "70vh" }}>
           <Spacer y={3} />
           <SignInHero>
