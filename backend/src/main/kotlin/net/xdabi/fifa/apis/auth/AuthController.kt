@@ -6,6 +6,8 @@ import net.xdabi.fifa.apis.auth.provider.AuthProvider
 import net.xdabi.fifa.apis.auth.provider.AuthProviderService
 import net.xdabi.fifa.apis.user.User
 import net.xdabi.fifa.apis.user.UserService
+import net.xdabi.fifa.common.annotation.JwtSubject
+import net.xdabi.fifa.common.annotation.Protected
 import net.xdabi.fifa.utils.EncryptionUtils
 import net.xdabi.fifa.utils.ResponseUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -150,4 +152,22 @@ class AuthController(
         )
     }
 
+    @Protected
+    @DeleteMapping("delete-account")
+    fun deleteAccount(@JwtSubject uid: String): ResponseEntity<Any> {
+        val user = userService.findById(uid)
+
+        if (user.isEmpty) {
+            return ResponseUtils.badRequest("User not found")
+        }
+
+        val identity = this.authIdentityService.findByUser(user.get())
+        this.authIdentityService.delete(identity.get())
+
+        val provider = this.authProviderService.findByUser(user.get())
+        this.authProviderService.delete(provider.get())
+
+        this.userService.delete(user.get())
+        return ResponseUtils.ok("Deleted user")
+    }
 }

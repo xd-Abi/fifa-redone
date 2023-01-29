@@ -40,6 +40,22 @@ export class AuthAPI extends BaseAPI {
     localStorage.removeItem("fifa-refresh-token");
   };
 
+  deleteAccount = async (): Promise<boolean> => {
+    const accessToken = await this.newAccessToken();
+    this.signOut();
+    const response = await this.callMethod({
+      url: "delete-account",
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then(() => true)
+      .catch(() => false);
+
+    return response;
+  };
+
   newAccessToken = async (): Promise<string> => {
     const response = await this.callMethod({
       url: "refresh",
