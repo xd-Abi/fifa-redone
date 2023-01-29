@@ -40,8 +40,23 @@ class ResponseUtils {
             )
         }
 
-        fun created(body: Any): ResponseEntity<Any> {
-            return ResponseEntity.badRequest().body(body)
+        fun ok(response: HttpServletResponse, message: String) {
+            response.status = HttpStatus.OK.value()
+            response.contentType = MediaType.APPLICATION_JSON_VALUE
+
+            val mapper = ObjectMapper()
+            val json = mapper.writeValueAsString(
+                mapOf(
+                    "timestamp" to System.currentTimeMillis(),
+                    "status" to HttpStatus.OK.value(),
+                    "error" to HttpStatus.OK.reasonPhrase,
+                    "message" to message,
+                )
+            )
+
+            response.writer.write(json)
+            response.writer.flush()
+            response.writer.close()
         }
 
         fun ok(body: Any): ResponseEntity<Any> {

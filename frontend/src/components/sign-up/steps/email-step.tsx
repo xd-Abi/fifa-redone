@@ -1,9 +1,10 @@
-import { Spacer, Text } from "@nextui-org/react";
+import { Spacer } from "@nextui-org/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "@/components/input";
 import { StyledForm, StyledFormSubmitButton } from "../styled";
 import { SignUpSubtitle } from "../utils";
+import { checkEmail } from "@/lib/api";
 
 type EmailFormType = {
   email: string;
@@ -23,7 +24,15 @@ const SignUpEmailStep = ({ initialValues, onSubmit, onBack }: Props) => {
         .required("Email is required")
         .email("Email is not valid"),
     }),
-    onSubmit: onSubmit,
+    onSubmit: (data: EmailFormType) => {
+      checkEmail(data.email)
+        .then((response) => {
+          onSubmit(data);
+        })
+        .catch((err) => {
+          formik.setErrors({ email: "Email already exists" });
+        });
+    },
     validateOnChange: true,
   });
 

@@ -85,9 +85,9 @@ const SignUpPersonalStep = ({ initialValues, onSubmit, onBack }: Props) => {
                 );
               }}
             >
-              <Dropdown.Item key={Gender.Male}>{Gender.Male}</Dropdown.Item>
-              <Dropdown.Item key={Gender.Female}>{Gender.Female}</Dropdown.Item>
-              <Dropdown.Item key={Gender.Other}>{Gender.Other}</Dropdown.Item>
+              <Dropdown.Item key={Gender.Male}>Male</Dropdown.Item>
+              <Dropdown.Item key={Gender.Female}>Female</Dropdown.Item>
+              <Dropdown.Item key={Gender.Other}>Other</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <Spacer y={0.5} />

@@ -8,10 +8,21 @@ import {
 } from "@/components";
 import { SignUpFormType } from "@/components/sign-up/form";
 import { Spacer, Container } from "@nextui-org/react";
+import { signUp } from "@/lib/api";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
+  const router = useRouter();
+
   const onSubmit = (data: SignUpFormType) => {
-    console.log(data);
+    signUp(data)
+      .then((e) => {
+        localStorage.setItem("fifa-refresh-token", e.data.refreshToken);
+        router.push("/");
+      })
+      .catch((err) => {
+        // @TODO: Show toast error message
+      });
   };
 
   return (

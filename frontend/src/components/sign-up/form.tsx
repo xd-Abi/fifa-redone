@@ -84,8 +84,7 @@ const SignUpForm = ({ onSubmit }: Props) => {
             setCurrentStep(SignUpWorkflowStep.Personal);
           }}
           onSubmit={(data) => {
-            setFormData({ ...formData, password: data.password });
-            onSubmit(formData);
+            onSubmit({ ...formData, password: data.password });
           }}
         />
       )}

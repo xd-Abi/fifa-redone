@@ -25,18 +25,18 @@ class AuthController(
 
     @PostMapping("sign-up")
     fun signUp(@Valid @RequestBody body: AuthRegisterRequestBody): ResponseEntity<Any> {
-        if (userService.findByEmail(body.email).isPresent) {
+        if (userService.findByEmail(body.email.lowercase()).isPresent) {
             return ResponseUtils.badRequest("Email already exists")
         }
-        if (userService.findByUsername(body.username).isPresent) {
+        if (userService.findByUsername(body.username.lowercase()).isPresent) {
             return ResponseUtils.badRequest("Username already exists")
         }
 
         val user = this.userService.save(
             User(
                 UUID.randomUUID(),
-                body.username,
-                body.email,
+                body.username.lowercase(),
+                body.email.lowercase(),
                 body.firstname,
                 body.lastname,
                 body.birthdate,
@@ -69,7 +69,7 @@ class AuthController(
         )
 
         val accessToken = jwtService.create(user.uid.toString())
-        return ResponseUtils.created(
+        return ResponseUtils.ok(
             mapOf(
                 "accessToken" to accessToken,
                 "refreshToken" to refreshToken,
@@ -77,7 +77,25 @@ class AuthController(
         )
     }
 
-    @GetMapping("refresh")
+    @GetMapping("check-username")
+    fun checkUsername(@RequestParam(value = "username", required = true) username: String): ResponseEntity<Any> {
+        if (userService.findByUsername(username.lowercase()).isPresent) {
+            return ResponseUtils.badRequest("Username already exists")
+        }
+
+        return ResponseUtils.ok("Username does not exists")
+    }
+
+    @GetMapping("check-email")
+    fun checkEmail(@RequestParam(value = "email", required = true) email: String): ResponseEntity<Any> {
+        if (userService.findByEmail(email.lowercase()).isPresent) {
+            return ResponseUtils.badRequest("Email already exists")
+        }
+
+        return ResponseUtils.ok("Email does not exists")
+    }
+
+    @PostMapping("refresh")
     fun refreshTokens(@Valid @RequestBody body: RefreshTokenRequestBody): ResponseEntity<Any> {
 
         val identity = authProviderService.findByRefreshToken(body.refreshToken)
@@ -92,11 +110,12 @@ class AuthController(
         identity.get().refreshToken = refreshToken
         authProviderService.save(identity.get())
 
-        return ResponseUtils.created(
+        return ResponseUtils.ok(
             mapOf(
                 "accessToken" to accessToken,
                 "refreshToken" to refreshToken,
             )
         )
     }
+
 }

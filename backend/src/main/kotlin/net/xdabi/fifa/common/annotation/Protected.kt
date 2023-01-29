@@ -27,7 +27,8 @@ class ProtectedInterceptor(
 
         val authorizationHeader = request.getHeader("Authorization")
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer")) {
-            ResponseUtils.unauthorized(response, "Missing Authorization header")
+            // @TODO: To avoid this error: Response to preflight request doesn't pass access control check: It does not have HTTP ok status.
+            ResponseUtils.ok(response, "Missing Authorization header")
             return false
         }
 

@@ -32,6 +32,33 @@ const UserDropdown = () => {
           />
         </Dropdown.Trigger>
       </Navbar.Item>
+      {user !== undefined && (
+        <Dropdown.Menu
+          aria-label="User menu actions"
+          onAction={handleDropdownAction}
+        >
+          <Dropdown.Item
+            key="profile"
+            css={{ height: "$18" }}
+            textValue="Sign Up"
+          >
+            <Text b color="inherit" css={{ d: "flex" }}>
+              Signed in as
+            </Text>
+
+            <Text b color="inherit" css={{ d: "flex" }}>
+              {user.email}
+            </Text>
+          </Dropdown.Item>
+          <Dropdown.Item key="settings" withDivider>
+            Settings
+          </Dropdown.Item>
+          <Dropdown.Item key="help-and-feedback">Help & Feedback</Dropdown.Item>
+          <Dropdown.Item key="logout" withDivider color="error">
+            Log Out
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      )}
       {user === undefined && (
         <Dropdown.Menu
           aria-label="User menu actions"

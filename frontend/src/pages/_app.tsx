@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
@@ -6,8 +6,11 @@ import type { AppProps } from "next/app";
 import { darkTheme, lightTheme } from "@/themes/shared";
 import { UserContextType, UserProvider } from "@/provider";
 import "@/styles/globals.css";
+import { getMe } from "@/lib/api";
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps, me }: AppProps & any) => {
+  const [user, setUser] = useState({} as UserContextType);
+
   useEffect(() => {
     console.log(
       `%c
@@ -24,6 +27,12 @@ There is nothing of interest here and
     `,
       "color:#FF5160;font-size:20px;"
     );
+
+    getMe().then((data) => {
+      setUser({
+        user: data,
+      });
+    });
   }, []);
 
   return (
@@ -37,7 +46,7 @@ There is nothing of interest here and
         }}
       >
         <NextUIProvider>
-          <UserProvider value={{} as UserContextType}>
+          <UserProvider value={user}>
             <Component {...pageProps} />
           </UserProvider>
         </NextUIProvider>
