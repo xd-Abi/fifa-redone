@@ -5,6 +5,7 @@ export { default as Head } from "./head";
 export * from "./icons";
 export { default as NextCallout } from "./next-callout";
 export * from "./primitives";
+export * from "./route";
 export * from "./sign-up";
 export * from "./team-rankings";
 export { default as ThemeToggle } from "./theme-toggle";

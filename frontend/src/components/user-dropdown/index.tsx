@@ -6,7 +6,7 @@ import { useIsMounted, useUser } from "@/hooks";
 const UserDropdown = () => {
   const router = useRouter();
   const isMounted = useIsMounted();
-  const user = useUser();
+  const { user, isAuthenticated } = useUser();
 
   const handleDropdownAction = (action: Key) => {
     switch (action) {
@@ -32,7 +32,7 @@ const UserDropdown = () => {
           />
         </Dropdown.Trigger>
       </Navbar.Item>
-      {user !== undefined && (
+      {isAuthenticated && user !== undefined && (
         <Dropdown.Menu
           aria-label="User menu actions"
           onAction={handleDropdownAction}
@@ -59,7 +59,7 @@ const UserDropdown = () => {
           </Dropdown.Item>
         </Dropdown.Menu>
       )}
-      {user === undefined && (
+      {!isAuthenticated && (
         <Dropdown.Menu
           aria-label="User menu actions"
           onAction={handleDropdownAction}

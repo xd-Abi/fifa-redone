@@ -2,6 +2,7 @@ import React from "react";
 import {
   AppFooter,
   AppNavbar,
+  GuestRoute,
   Head,
   SignUpForm,
   SignUpHero,
@@ -11,7 +12,7 @@ import { Spacer, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { getAuthAPI } from "@/lib/api";
 import { useDispatch } from "react-redux";
-import { userChange } from "@/lib/store/user";
+import { userChange } from "@/lib/store/auth";
 
 const SignUp = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const SignUp = () => {
   };
 
   return (
-    <React.Fragment>
+    <GuestRoute>
       <Head
         title="Sign Up - FIFA"
         description="Join the community by signing up"
@@ -51,7 +52,7 @@ const SignUp = () => {
         </Container>
       </main>
       <AppFooter />
-    </React.Fragment>
+    </GuestRoute>
   );
 };
 

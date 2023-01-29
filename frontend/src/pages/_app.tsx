@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
 import { Provider as GlobalStoreProvider, useDispatch } from "react-redux";
@@ -8,9 +8,9 @@ import { darkTheme, lightTheme } from "@/themes/shared";
 import "@/styles/globals.css";
 import { getAuthAPI, getMeAPI } from "@/lib/api";
 import GlobalStore from "@/lib/store";
-import { userChange } from "@/lib/store/user";
+import { userChange } from "@/lib/store/auth";
 
-const AppProvidersWrapper = ({ ...props }: AppProps & any) => {
+const AppWrapper = ({ ...props }: AppProps & any) => {
   return (
     <React.Fragment>
       <ThemeProvider
@@ -33,6 +33,7 @@ const AppProvidersWrapper = ({ ...props }: AppProps & any) => {
 
 const App = ({ Component, pageProps }: AppProps & any) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadUser = async () => {
     const user = getAuthAPI().isUserSignedIn()
@@ -59,10 +60,14 @@ There is nothing of interest here and
       "color:#FF5160;font-size:20px;"
     );
 
-    loadUser();
+    loadUser().then(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+    return <React.Fragment></React.Fragment>;
+  }
 
   return <Component {...pageProps} />;
 };
 
-export default AppProvidersWrapper;
+export default AppWrapper;
