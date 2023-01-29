@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../input";
 import { StyledForm, StyledFormSubmitButton } from "./styled";
-import { Gender, User } from "@/lib/models";
+import { Gender } from "@/lib/models";
 import { useUser } from "@/hooks";
 import { UserUpdateInterface } from "@/lib/api/endpoints/me/types";
 
@@ -14,8 +14,6 @@ type Props = {
 
 export const ProfileForm = ({ onSubmit }: Props) => {
   const { user } = useUser();
-
-  console.log(user);
 
   const formik = useFormik<UserUpdateInterface>({
     initialValues: {
