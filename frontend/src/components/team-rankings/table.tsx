@@ -7,21 +7,15 @@ import {
   StyledTeamRankingMobileTable,
   StyledTeamRankingPositionText,
 } from "./styled";
-import { useIsMounted } from "@/hooks";
+import Mounted from "../mounted";
 
 type Props = {
   teams: Team[];
 };
 
 const TeamRankingsTable = ({ teams }: Props) => {
-  const isMounted = useIsMounted();
-
-  if (!isMounted) {
-    return <React.Fragment />;
-  }
-
   return (
-    <React.Fragment>
+    <Mounted>
       <StyledTeamRankingDesktopTable shadow={false} aria-label="team rankings">
         <Table.Header>
           <Table.Column>Rank</Table.Column>
@@ -100,7 +94,7 @@ const TeamRankingsTable = ({ teams }: Props) => {
         </Table.Body>
         <Table.Pagination shadow noMargin align="center" rowsPerPage={40} />
       </StyledTeamRankingMobileTable>
-    </React.Fragment>
+    </Mounted>
   );
 };
 

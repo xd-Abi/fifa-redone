@@ -9,6 +9,7 @@ import "@/styles/globals.css";
 import { getAuthAPI, getMeAPI } from "@/lib/api";
 import GlobalStore from "@/lib/store";
 import { userChange } from "@/lib/store/auth";
+import { Loading } from "@/components";
 
 const AppWrapper = ({ ...props }: AppProps & any) => {
   return (
@@ -35,14 +36,6 @@ const App = ({ Component, pageProps }: AppProps & any) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadUser = async () => {
-    const user = getAuthAPI().isUserSignedIn()
-      ? await getMeAPI().getMe()
-      : undefined;
-
-    dispatch(userChange({ user }));
-  };
-
   useEffect(() => {
     console.log(
       `%c
@@ -60,14 +53,22 @@ There is nothing of interest here and
       "color:#FF5160;font-size:20px;"
     );
 
+    const loadUser = async () => {
+      const user = getAuthAPI().isUserSignedIn()
+        ? await getMeAPI().getMe()
+        : undefined;
+
+      dispatch(userChange({ user }));
+    };
+
     loadUser().then(() => setIsLoading(false));
   }, []);
 
-  if (isLoading) {
-    return <React.Fragment></React.Fragment>;
-  }
-
-  return <Component {...pageProps} />;
+  return (
+    <Loading isLoading={isLoading}>
+      <Component {...pageProps} />
+    </Loading>
+  );
 };
 
 export default AppWrapper;
