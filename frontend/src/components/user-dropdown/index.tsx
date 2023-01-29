@@ -6,12 +6,16 @@ import { useIsMounted, useUser } from "@/hooks";
 const UserDropdown = () => {
   const router = useRouter();
   const isMounted = useIsMounted();
-  const { user, isAuthenticated } = useUser();
+  const { user, isAuthenticated, logout } = useUser();
 
   const handleDropdownAction = (action: Key) => {
     switch (action) {
       case "sign-up":
         router.push("/auth/sign-up");
+        break;
+      case "logout":
+        logout();
+        break;
     }
   };
 

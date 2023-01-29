@@ -24,11 +24,12 @@ const SignUpUsernameStep = ({ initialValues, onSubmit }: Props) => {
     onSubmit: (data: UsernameFormType) => {
       getAuthAPI()
         .isUsernameUsed(data.username)
-        .then(() => {
-          onSubmit(data);
-        })
-        .catch(() => {
-          formik.setErrors({ username: "Username already exists" });
+        .then((used) => {
+          if (used) {
+            formik.setErrors({ username: "Username already exists" });
+          } else {
+            onSubmit(data);
+          }
         });
     },
     validateOnChange: true,

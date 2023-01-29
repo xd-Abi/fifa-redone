@@ -44,8 +44,8 @@ export class AuthAPI extends BaseAPI {
       method: "GET",
       params: { username },
     })
-      .then(() => true)
-      .catch(() => false);
+      .then(() => false)
+      .catch(() => true);
 
     return response;
   };
@@ -56,13 +56,17 @@ export class AuthAPI extends BaseAPI {
       method: "GET",
       params: { email },
     })
-      .then(() => true)
-      .catch(() => false);
+      .then(() => false)
+      .catch(() => true);
 
     return response;
   };
 
   isUserSignedIn = () => {
-    return localStorage.getItem("fifa-refresh-token")?.length != 0;
+    return localStorage.getItem("fifa-refresh-token") !== null;
+  };
+
+  signOut = () => {
+    localStorage.removeItem("fifa-refresh-token");
   };
 }

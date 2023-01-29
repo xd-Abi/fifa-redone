@@ -27,11 +27,12 @@ const SignUpEmailStep = ({ initialValues, onSubmit, onBack }: Props) => {
     onSubmit: (data: EmailFormType) => {
       getAuthAPI()
         .isEmailUsed(data.email)
-        .then(() => {
-          onSubmit(data);
-        })
-        .catch(() => {
-          formik.setErrors({ email: "Email already exists" });
+        .then((used) => {
+          if (used) {
+            formik.setErrors({ email: "Email already exists" });
+          } else {
+            onSubmit(data);
+          }
         });
     },
     validateOnChange: true,
