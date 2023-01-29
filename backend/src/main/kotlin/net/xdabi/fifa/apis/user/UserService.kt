@@ -18,6 +18,10 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findByEmail(email)
     }
 
+    fun findByEmailOrUsername(emailOrUsername: String): Optional<User> {
+        return userRepository.findByEmailOrUsername(emailOrUsername)
+    }
+
     fun save(user: User): User {
         return userRepository.save(user)
     }

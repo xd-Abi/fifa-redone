@@ -13,9 +13,5 @@ class EncryptionUtils {
         fun hash(str: String, salt: String): String {
             return BCrypt.hashpw(str, salt)
         }
-
-        fun checkStrings(str: String, hashed: String): Boolean {
-            return BCrypt.checkpw(str, hashed)
-        }
     }
 }

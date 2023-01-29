@@ -77,6 +77,35 @@ class AuthController(
         )
     }
 
+    @PostMapping("sign-in")
+    fun signIn(@Valid @RequestBody body: AuthSignInRequestBody): ResponseEntity<Any> {
+        val user = userService.findByEmailOrUsername(body.emailOrUsername.lowercase());
+        if (!user.isPresent) {
+            return ResponseUtils.badRequest("Email or Username not found")
+        }
+
+        val identity = authProviderService.findByUser(user.get());
+        if (!identity.isPresent) {
+            return ResponseUtils.badRequest("Auth Identity not found")
+        }
+
+        val hashedPassword = EncryptionUtils.hash(body.password, identity.get().salt);
+        if (hashedPassword != identity.get().password) {
+            return ResponseUtils.badRequest("Access denied")
+        }
+
+        val refreshToken = EncryptionUtils.hash(Math.random().toString(), EncryptionUtils.genSalt(4))
+        val accessToken = jwtService.create(user.get().uid.toString())
+
+        return ResponseUtils.ok(
+            mapOf(
+                "accessToken" to accessToken,
+                "refreshToken" to refreshToken,
+            )
+        )
+    }
+
+
     @GetMapping("check-username")
     fun checkUsername(@RequestParam(value = "username", required = true) username: String): ResponseEntity<Any> {
         if (userService.findByUsername(username.lowercase()).isPresent) {
