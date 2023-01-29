@@ -52,6 +52,7 @@ export const SignInForm = ({ onSubmit }: Props) => {
       <Input
         id="password"
         placeholder="e.g. myPassword"
+        type="password"
         error={formik.errors.password}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}

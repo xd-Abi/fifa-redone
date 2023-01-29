@@ -18,4 +18,8 @@ class AuthProviderService(private val authProviderRepository: AuthProviderReposi
     fun save(authProvider: AuthProvider): AuthProvider {
         return authProviderRepository.save(authProvider)
     }
+
+    fun delete(authProvider: AuthProvider) {
+        authProviderRepository.delete(authProvider)
+    }
 }

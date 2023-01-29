@@ -14,4 +14,8 @@ class AuthIdentityService(private val authIdentityRepository: AuthIdentityReposi
     fun save(authIdentity: AuthIdentity): AuthIdentity {
         return authIdentityRepository.save(authIdentity)
     }
+
+    fun delete(authIdentity: AuthIdentity) {
+        authIdentityRepository.delete(authIdentity)
+    }
 }
