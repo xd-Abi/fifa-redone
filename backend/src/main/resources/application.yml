@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: fifa-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fifa
+    username: backend
+    password: VpGdxrtBbzs0Zgxn5o
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+    show-sql: false
+security:
+  jwt:
+    token:
+      secret: B3fX8uuAr1Vfs2
+      expiration: 900000 # 15 minutes
