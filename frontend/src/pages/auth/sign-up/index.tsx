@@ -4,9 +4,11 @@ import {
   AppNavbar,
   GuestRoute,
   Head,
+  showErrorToast,
   SignUpForm,
   SignUpFormType,
   SignUpHero,
+  Toast,
 } from "@/components";
 import { Spacer, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
@@ -31,7 +33,7 @@ const SignUp = () => {
       );
       router.push("/");
     } else {
-      // @TODO: Show toast error message
+      showErrorToast("Registration failed");
     }
   };
 
@@ -43,6 +45,7 @@ const SignUp = () => {
       />
       <AppNavbar />
       <main>
+        <Toast />
         <Container lg css={{ minHeight: "70vh" }}>
           <Spacer y={3} />
           <SignUpHero>

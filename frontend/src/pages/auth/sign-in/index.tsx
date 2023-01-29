@@ -4,9 +4,11 @@ import {
   AppNavbar,
   GuestRoute,
   Head,
+  showErrorToast,
   SignInForm,
   SignInFormType,
   SignInHero,
+  Toast,
 } from "@/components";
 import { Spacer, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
@@ -26,7 +28,7 @@ const SignUp = () => {
       dispatch(userChange({ user: me }));
       router.push("/");
     } else {
-      // @TODO: Show toast error message
+      showErrorToast("Access denied!");
     }
   };
 
@@ -35,6 +37,8 @@ const SignUp = () => {
       <Head title="Login - FIFA" description="Welcome back!" />
       <AppNavbar />
       <main>
+        <Toast />
+
         <Container lg css={{ minHeight: "70vh" }}>
           <Spacer y={3} />
           <SignInHero>

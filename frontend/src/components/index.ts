@@ -13,3 +13,4 @@ export * from "./sign-in";
 export * from "./sign-up";
 export * from "./team-rankings";
 export { default as ThemeToggle } from "./theme-toggle";
+export { default as Toast, showErrorToast } from "./toast";
