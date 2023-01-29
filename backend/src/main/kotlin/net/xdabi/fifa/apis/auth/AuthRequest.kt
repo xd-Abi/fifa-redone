@@ -31,6 +31,15 @@ data class AuthRegisterRequestBody(
     val password: String,
 )
 
+data class AuthSignInRequestBody(
+    @NotBlank
+    @Email
+    val emailOrUsername: String,
+
+    @NotBlank
+    val password: String,
+)
+
 data class RefreshTokenRequestBody(
     @NotBlank
     val refreshToken: String,

@@ -13,6 +13,9 @@ const UserDropdown = () => {
       case "sign-up":
         router.push("/auth/sign-up");
         break;
+      case "sign-in":
+        router.push("/auth/sign-in");
+        break;
       case "logout":
         logout();
         break;

@@ -1,5 +1,6 @@
 package net.xdabi.fifa.apis.auth.provider
 
+import net.xdabi.fifa.apis.user.User
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -8,6 +9,10 @@ class AuthProviderService(private val authProviderRepository: AuthProviderReposi
 
     fun findByRefreshToken(refreshToken: String): Optional<AuthProvider> {
         return authProviderRepository.findByRefreshToken(refreshToken)
+    }
+
+    fun findByUser(user: User): Optional<AuthProvider> {
+        return authProviderRepository.findByUser(user)
     }
 
     fun save(authProvider: AuthProvider): AuthProvider {

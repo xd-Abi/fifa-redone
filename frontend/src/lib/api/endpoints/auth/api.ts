@@ -1,12 +1,12 @@
 import { BaseAPI } from "../../utils";
-import { RegisterUserInterface } from "./types";
+import { SignInUserInterface, SignUpInterface } from "./types";
 
 export class AuthAPI extends BaseAPI {
   constructor() {
     super("http://localhost:8080/api/v1/auth/");
   }
 
-  registerUser = async (body: RegisterUserInterface): Promise<boolean> => {
+  signUp = async (body: SignUpInterface): Promise<boolean> => {
     const response = await this.callMethod({
       url: "sign-up",
       method: "POST",
@@ -19,6 +19,25 @@ export class AuthAPI extends BaseAPI {
       .catch(() => false);
 
     return response;
+  };
+
+  signIn = async (body: SignInUserInterface): Promise<boolean> => {
+    const response = await this.callMethod({
+      url: "sign-in",
+      method: "POST",
+      body,
+    })
+      .then((response) => {
+        localStorage.setItem("fifa-refresh-token", response.data.refreshToken);
+        return true;
+      })
+      .catch(() => false);
+
+    return response;
+  };
+
+  signOut = () => {
+    localStorage.removeItem("fifa-refresh-token");
   };
 
   newAccessToken = async (): Promise<string> => {
@@ -64,9 +83,5 @@ export class AuthAPI extends BaseAPI {
 
   isUserSignedIn = () => {
     return localStorage.getItem("fifa-refresh-token") !== null;
-  };
-
-  signOut = () => {
-    localStorage.removeItem("fifa-refresh-token");
   };
 }
