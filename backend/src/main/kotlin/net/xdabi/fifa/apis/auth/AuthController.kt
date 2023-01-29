@@ -97,6 +97,9 @@ class AuthController(
         val refreshToken = EncryptionUtils.hash(Math.random().toString(), EncryptionUtils.genSalt(4))
         val accessToken = jwtService.create(user.get().uid.toString())
 
+        identity.get().refreshToken = refreshToken
+        authProviderService.save(identity.get())
+
         return ResponseUtils.ok(
             mapOf(
                 "accessToken" to accessToken,

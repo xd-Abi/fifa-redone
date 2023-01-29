@@ -20,7 +20,7 @@ type Props = {
   onSubmit: (data: SignUpFormType) => void;
 };
 
-const SignUpForm = ({ onSubmit }: Props) => {
+export const SignUpForm = ({ onSubmit }: Props) => {
   const [currentStep, setCurrentStep] = useState(SignUpWorkflowStep.Username);
   const [formData, setFormData] = useState<SignUpFormType>(
     {} as SignUpFormType
@@ -91,5 +91,3 @@ const SignUpForm = ({ onSubmit }: Props) => {
     </React.Fragment>
   );
 };
-
-export default SignUpForm;
