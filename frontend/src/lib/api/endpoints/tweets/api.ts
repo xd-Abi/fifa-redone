@@ -28,4 +28,20 @@ export class TweetsAPI extends BaseAPI {
 
     return result.data;
   };
+
+  likeTweet = async (tweetId: string): Promise<string> => {
+    const accessToken = await getAuthAPI().newAccessToken();
+    const result = await this.callMethod({
+      method: "POST",
+      url: "/like",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        tweet: tweetId,
+      },
+    });
+
+    return result.data;
+  };
 }

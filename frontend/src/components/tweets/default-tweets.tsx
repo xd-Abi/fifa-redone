@@ -21,7 +21,7 @@ const DefaultTweets = () => {
           "https://pbs.twimg.com/media/Fn0GHS6XEAEVOBf?format=jpg&name=small"
         }
         likes={[]}
-        id={`${Math.random()}`}
+        id={"776be0d4-7cd4-4641-9996-e25fa104ad8c"}
       />
       <Spacer y={1} />
       <UserTweet
@@ -41,7 +41,7 @@ const DefaultTweets = () => {
           "https://pbs.twimg.com/media/Fn0z3h7XoAQ7a3D?format=jpg&name=small"
         }
         likes={[]}
-        id={`${Math.random()}`}
+        id={"776be0d4-7cd4-4641-9996-e25fa104ad2c"}
       />
       <Spacer y={1} />
       <UserTweet
@@ -59,7 +59,7 @@ const DefaultTweets = () => {
           "https://cdn.theathletic.com/cdn-cgi/image/width=1920,format=auto/https://cdn.theathletic.com/app/uploads/2022/12/05144054/WC22_Editorial_RonaldovsMessi-scaled.jpg"
         }
         likes={[]}
-        id={`${Math.random()}`}
+        id={"776be0d4-7cd4-4641-9996-e25fa101ad2c"}
       />
       <Spacer y={1} />
       <UserTweet
@@ -75,7 +75,7 @@ const DefaultTweets = () => {
         text={"CR7 Clear. 🥇"}
         image={"https://pbs.twimg.com/media/FK2ssjZX0AkwLm4.jpg"}
         likes={[]}
-        id={`${Math.random()}`}
+        id={"776be0d4-7cd4-4641-4996-e25fa104ad2c"}
       />
     </React.Fragment>
   );
