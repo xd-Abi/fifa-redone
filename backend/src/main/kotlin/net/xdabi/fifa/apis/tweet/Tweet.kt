@@ -14,7 +14,7 @@ data class Tweet(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    val user: User?,
+    val creator: User?,
 
     val text: String,
     val image: String?,

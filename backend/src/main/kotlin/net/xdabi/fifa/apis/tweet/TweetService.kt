@@ -16,10 +16,6 @@ class TweetService(private val tweetRepository: TweetRepository) {
         return tweetRepository.findAll()
     }
 
-    fun findByUser(user: User): Optional<Tweet> {
-        return tweetRepository.findByUser(user)
-    }
-
     fun save(tweet: Tweet): Tweet {
         return tweetRepository.save(tweet)
     }

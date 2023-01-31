@@ -17,5 +17,6 @@ export { default as ArrowLeftIcon } from "./arrow-left";
 export { default as GithubIcon } from "./github";
 export { default as MoonIcon } from "./moon";
 export { default as NextIcon } from "./next";
+export { default as SendIcon } from "./send";
 export { default as SunIcon } from "./sun";
 export { default as TagIcon } from "./tag";

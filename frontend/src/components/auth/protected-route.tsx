@@ -1,6 +1,6 @@
+import React, { useEffect } from "react";
 import { useUser } from "@/hooks";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
 
 type Props = {
   children?: React.ReactNode;
