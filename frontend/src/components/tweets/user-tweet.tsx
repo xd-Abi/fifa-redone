@@ -35,7 +35,9 @@ const UserTweet = ({ text, image, creator }: Props) => {
         </Row>
       </Card.Header>
       <Card.Body>
-        <Text>{text}</Text>
+        {text.split("\n").map((line) => (
+          <Text key={line}>{line}</Text>
+        ))}
         {image !== null && image?.length !== 0 && (
           <Image
             src={image ?? ""}

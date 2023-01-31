@@ -1,7 +1,7 @@
 import { TweetsAPI } from "./api";
 
-const getTweetAPI = () => {
+const getTweetsAPI = () => {
   return new TweetsAPI();
 };
 
-export default getTweetAPI;
+export default getTweetsAPI;

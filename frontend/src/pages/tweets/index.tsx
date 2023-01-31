@@ -1,36 +1,22 @@
 import React from "react";
-import {
-  Avatar,
-  Button,
-  Card,
-  Col,
-  Container,
-  Image,
-  Input,
-  Row,
-  Spacer,
-  styled,
-  Text,
-  Textarea,
-} from "@nextui-org/react";
+import { Container, Spacer } from "@nextui-org/react";
 import {
   AppFooter,
   AppNavbar,
   DefaultTweets,
   Head,
-  SendIcon,
   TweetCreator,
   UserTweet,
 } from "@/components";
-import { Tweet, User } from "@/lib/models";
-import getTweetAPI from "@/lib/api/endpoints/tweets";
+import { Tweet } from "@/lib/models";
+import { getTweetsAPI } from "@/lib/api";
 
 type Props = {
   tweets: Tweet[];
 };
 
 export const getServerSideProps = async () => {
-  const tweets = await getTweetAPI().getTweets();
+  const tweets = await getTweetsAPI().getTweets();
   return {
     props: {
       tweets,
@@ -53,7 +39,7 @@ const Tweets = ({ tweets }: Props) => {
           <Spacer y={2} />
           <DefaultTweets />
           {tweets.map((tweet) => (
-            <React.Fragment>
+            <React.Fragment key={tweet.id}>
               <Spacer y={1} />
               <UserTweet {...tweet} />
             </React.Fragment>
