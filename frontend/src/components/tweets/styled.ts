@@ -1,6 +1,6 @@
 import { styled } from "@nextui-org/react";
 
-export const SendButton = styled("button", {
+export const StyledTweetsSendButton = styled("button", {
   // reset button styles
   background: "transparent",
   border: "none",
@@ -38,6 +38,45 @@ export const SendButton = styled("button", {
     svg: {
       transform: "none",
       opacity: 100,
+    },
+  },
+});
+
+export const StyledTweetsLikeButton = styled("button", {
+  // reset button styles
+  background: "transparent",
+  border: "none",
+  padding: 0,
+  // styles
+  width: "24px",
+  margin: "0 10px",
+  dflex: "center",
+  svg: {
+    size: "100%",
+    boxShadow: "0 5px 20px -5px rgba(0, 0, 0, 0.1)",
+    path: {
+      fill: "transparent",
+      stroke: "$red600",
+    },
+  },
+  "&:disabled": {
+    svg: {
+      path: {
+        fill: "transparent",
+      },
+    },
+  },
+  variants: {
+    variant: {
+      filled: {
+        svg: {
+          path: {
+            fill: "$red600",
+            stroke: "$red600",
+          },
+        },
+      },
+      default: {},
     },
   },
 });

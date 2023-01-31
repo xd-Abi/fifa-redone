@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, Textarea, Col, Input } from "@nextui-org/react";
 import { ProtectedComponent } from "../auth";
 import { SendIcon } from "../icons";
-import { SendButton } from "./styled";
+import { StyledTweetsSendButton } from "./styled";
 import { getTweetsAPI } from "@/lib/api";
 
 const TweetCreator = () => {
@@ -46,9 +46,12 @@ const TweetCreator = () => {
             />
           </Col>
           <Col css={{ w: "fit-content" }}>
-            <SendButton onClick={onCreate} disabled={text.length === 0}>
+            <StyledTweetsSendButton
+              onClick={onCreate}
+              disabled={text.length === 0}
+            >
               <SendIcon />
-            </SendButton>
+            </StyledTweetsSendButton>
           </Col>
         </Card.Footer>
       </Card>
