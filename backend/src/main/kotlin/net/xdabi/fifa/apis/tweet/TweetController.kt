@@ -33,7 +33,7 @@ class TweetController(
 
         val id = UUID.randomUUID();
         this.tweetService.save(
-            Tweet(id, user.get(), body.text, body.image)
+            Tweet(id, user.get(), body.text, body.image, mutableListOf())
         )
 
         return ResponseUtils.ok(mapOf(
@@ -56,5 +56,32 @@ class TweetController(
         }
 
         return ResponseUtils.ok(tweet)
+    }
+
+    @Protected
+    @PostMapping("like")
+    fun likeTweet(@JwtSubject uid: String, @RequestParam(name="tweet") tweetId: String): ResponseEntity<Any> {
+        val user = this.userService.findById(uid)
+
+        if (user.isEmpty) {
+            return ResponseUtils.badRequest("User not found")
+        }
+
+        val tweet = this.tweetService.findById(tweetId);
+
+        if (tweet.isEmpty) {
+            return ResponseUtils.badRequest("Tweet not found")
+        }
+
+        val index = tweet.get().likes.indexOf(user.get());
+        if (index != -1) {
+            tweet.get().likes.removeAt(index)
+        }
+        else {
+            tweet.get().likes.add(user.get())
+        }
+
+        this.tweetService.save(tweet.get())
+        return ResponseUtils.ok("Updated tweet")
     }
 }

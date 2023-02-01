@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar, Card, Col, Image, Row, Text } from "@nextui-org/react";
 import { Tweet } from "@/lib/models";
+import { HeartIcon } from "../icons";
+import { StyledTweetsLikeButton } from "./styled";
+import { useUser } from "@/hooks";
+import { getTweetsAPI } from "@/lib/api";
 
 type Props = Tweet;
 
-const UserTweet = ({ text, image, creator }: Props) => {
+const UserTweet = ({ id, text, image, creator, likes }: Props) => {
+  const user = useUser();
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesAmount, setLikesAmount] = useState(likes.length);
+
+  useEffect(() => {
+    const isTweetLikedByUser = () => {
+      if (user.user !== undefined) {
+        for (const like of likes) {
+          if (like.uid === user.user.uid) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
+
+    setIsLiked(isTweetLikedByUser());
+  }, []);
+
+  const onLikeButtonClick = () => {
+    if (!user.isAuthenticated) {
+      return;
+    }
+
+    setLikesAmount(isLiked ? likesAmount - 1 : likesAmount + 1);
+    setIsLiked(!isLiked);
+
+    getTweetsAPI().likeTweet(id);
+  };
+
   return (
     <Card
       isHoverable
@@ -49,6 +84,20 @@ const UserTweet = ({ text, image, creator }: Props) => {
           />
         )}
       </Card.Body>
+      <Card.Footer>
+        <Col css={{ w: "fit-content" }}>
+          <StyledTweetsLikeButton
+            disabled={!user.isAuthenticated}
+            variant={isLiked ? "filled" : "default"}
+            onClick={onLikeButtonClick}
+          >
+            <HeartIcon />
+          </StyledTweetsLikeButton>
+        </Col>
+        <Col css={{ w: "fit-content" }}>
+          <Text color="$gray500">{likesAmount}</Text>
+        </Col>
+      </Card.Footer>
     </Card>
   );
 };

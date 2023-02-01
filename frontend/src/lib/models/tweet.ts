@@ -5,4 +5,5 @@ export type Tweet = {
   text: string;
   image?: string;
   creator: User;
+  likes: User[];
 };

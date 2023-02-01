@@ -18,7 +18,12 @@ data class Tweet(
 
     val text: String,
     val image: String?,
-) {
 
-    private constructor(): this(UUID.randomUUID(), null, "", null)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uid", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    val likes: MutableList<User>
+    ) {
+
+    private constructor(): this(UUID.randomUUID(), null, "", null, mutableListOf())
 }
