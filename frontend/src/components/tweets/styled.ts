@@ -1,4 +1,4 @@
-import { styled } from "@nextui-org/react";
+import {styled} from "@nextui-org/react";
 
 export const StyledTweetsSendButton = styled("button", {
   // reset button styles
@@ -42,6 +42,8 @@ export const StyledTweetsSendButton = styled("button", {
   },
 });
 
+export const StyledCommentSendButton = StyledTweetsSendButton;
+
 export const StyledTweetsLikeButton = styled("button", {
   // reset button styles
   background: "transparent",
@@ -77,6 +79,24 @@ export const StyledTweetsLikeButton = styled("button", {
         },
       },
       default: {},
+    },
+  },
+});
+
+export const StyledTweetsCommentContainer = styled("div", {
+  // reset button styles
+  background: "transparent",
+  border: "none",
+  padding: 0,
+  // styles
+  width: "24px",
+  margin: "0 10px",
+  dflex: "center",
+  svg: {
+    size: "100%",
+    boxShadow: "0 5px 20px -5px rgba(0, 0, 0, 0.1)",
+    path: {
+      fill: "$gray500",
     },
   },
 });

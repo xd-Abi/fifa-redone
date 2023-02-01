@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Avatar, Card, Col, Image, Row, Text } from "@nextui-org/react";
-import { Tweet } from "@/lib/models";
-import { HeartIcon } from "../icons";
-import { StyledTweetsLikeButton } from "./styled";
-import { useUser } from "@/hooks";
-import { getTweetsAPI } from "@/lib/api";
+import React, {useState, useEffect} from "react";
+import {Avatar, Card, Col, Image, Row, Text} from "@nextui-org/react";
+import {Tweet} from "@/lib/models";
+import {HeartIcon, SpeachBubbleIcon} from "../icons";
+import {StyledTweetsCommentContainer, StyledTweetsLikeButton} from "./styled";
+import {useUser} from "@/hooks";
+import {getTweetsAPI} from "@/lib/api";
 
 type Props = Tweet;
 
-const UserTweet = ({ id, text, image, creator, likes }: Props) => {
+const UserTweet = ({id, text, image, creator, likes, comments}: Props) => {
   const user = useUser();
   const [isLiked, setIsLiked] = useState(false);
   const [likesAmount, setLikesAmount] = useState(likes.length);
@@ -44,11 +44,11 @@ const UserTweet = ({ id, text, image, creator, likes }: Props) => {
     <Card
       isHoverable
       variant="bordered"
-      css={{ w: "100%", p: "$5", bg: "transparent" }}
+      css={{w: "100%", p: "$5", bg: "transparent"}}
     >
       <Card.Header>
         <Row>
-          <Col css={{ w: "fit-content", mr: "$7" }}>
+          <Col css={{w: "fit-content", mr: "$7"}}>
             <Avatar
               bordered
               as="button"
@@ -70,7 +70,7 @@ const UserTweet = ({ id, text, image, creator, likes }: Props) => {
         </Row>
       </Card.Header>
       <Card.Body>
-        {text.split("\n").map((line) => (
+        {text.split("\n").map(line => (
           <Text key={line}>{line}</Text>
         ))}
         {image !== null && image?.length !== 0 && (
@@ -85,7 +85,7 @@ const UserTweet = ({ id, text, image, creator, likes }: Props) => {
         )}
       </Card.Body>
       <Card.Footer>
-        <Col css={{ w: "fit-content" }}>
+        <Col css={{w: "fit-content"}}>
           <StyledTweetsLikeButton
             disabled={!user.isAuthenticated}
             variant={isLiked ? "filled" : "default"}
@@ -94,8 +94,16 @@ const UserTweet = ({ id, text, image, creator, likes }: Props) => {
             <HeartIcon />
           </StyledTweetsLikeButton>
         </Col>
-        <Col css={{ w: "fit-content" }}>
+        <Col css={{w: "fit-content"}}>
           <Text color="$gray500">{likesAmount}</Text>
+        </Col>
+        <Col css={{w: "fit-content", ml: "$10"}}>
+          <StyledTweetsCommentContainer>
+            <SpeachBubbleIcon fill="none" />
+          </StyledTweetsCommentContainer>
+        </Col>
+        <Col css={{w: "fit-content"}}>
+          <Text color="$gray500">{comments.length}</Text>
         </Col>
       </Card.Footer>
     </Card>
