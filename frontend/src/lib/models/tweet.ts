@@ -1,4 +1,4 @@
-import { User } from "./user";
+import {User} from "./user";
 
 export type Tweet = {
   id: string;
@@ -6,4 +6,5 @@ export type Tweet = {
   image?: string;
   creator: User;
   likes: User[];
+  comments: Comment[];
 };
