@@ -1,7 +1,7 @@
-import { Tweet } from "@/lib/models";
-import { BaseAPI } from "../../utils";
+import {Tweet} from "@/lib/models";
+import {BaseAPI} from "../../utils";
 import getAuthAPI from "../auth";
-import { TweetCreateInterface } from "./types";
+import {TweetCreateInterface} from "./types";
 
 export class TweetsAPI extends BaseAPI {
   constructor() {
@@ -11,6 +11,17 @@ export class TweetsAPI extends BaseAPI {
   getTweets = async (): Promise<Tweet[]> => {
     const result = await this.callMethod({
       method: "GET",
+    });
+
+    return result.data;
+  };
+
+  getTweet = async (id: string): Promise<Tweet> => {
+    const result = await this.callMethod({
+      method: "GET",
+      params: {
+        tweet: id,
+      },
     });
 
     return result.data;

@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Spacer } from "@nextui-org/react";
+import {Container, Spacer} from "@nextui-org/react";
+import Link from "next/link";
 import {
   AppFooter,
   AppNavbar,
@@ -8,8 +9,8 @@ import {
   TweetCreator,
   UserTweet,
 } from "@/components";
-import { Tweet } from "@/lib/models";
-import { getTweetsAPI } from "@/lib/api";
+import {Tweet} from "@/lib/models";
+import {getTweetsAPI} from "@/lib/api";
 
 type Props = {
   tweets: Tweet[];
@@ -24,7 +25,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Tweets = ({ tweets }: Props) => {
+const Tweets = ({tweets}: Props) => {
   return (
     <React.Fragment>
       <Head
@@ -38,10 +39,12 @@ const Tweets = ({ tweets }: Props) => {
           <TweetCreator />
           <Spacer y={2} />
           <DefaultTweets />
-          {tweets.map((tweet) => (
+          {tweets.map(tweet => (
             <React.Fragment key={tweet.id}>
               <Spacer y={1} />
-              <UserTweet {...tweet} />
+              <Link href={`tweets/${tweet.id}`}>
+                <UserTweet {...tweet} />
+              </Link>
             </React.Fragment>
           ))}
         </Container>
