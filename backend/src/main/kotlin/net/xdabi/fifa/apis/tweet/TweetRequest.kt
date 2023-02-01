@@ -8,3 +8,11 @@ data class TweetCreateRequestBody(
     val text: String,
     val image: String
 )
+
+data class CommentRequestBody(
+    @NotBlank
+    val tweetId: String,
+
+    @NotBlank
+    val text: String,
+)

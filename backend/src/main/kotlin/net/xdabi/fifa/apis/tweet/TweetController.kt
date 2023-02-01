@@ -1,5 +1,7 @@
 package net.xdabi.fifa.apis.tweet
 
+import net.xdabi.fifa.apis.comment.Comment
+import net.xdabi.fifa.apis.comment.CommentService
 import net.xdabi.fifa.apis.user.UserService
 import net.xdabi.fifa.common.annotation.JwtSubject
 import net.xdabi.fifa.common.annotation.Protected
@@ -19,7 +21,8 @@ import javax.validation.Valid
 @RequestMapping("api/v1/tweet")
 class TweetController(
     @Autowired private val tweetService: TweetService,
-    @Autowired private val userService: UserService
+    @Autowired private val userService: UserService,
+    @Autowired private val commentService: CommentService,
 ) {
 
     @Protected
@@ -33,12 +36,14 @@ class TweetController(
 
         val id = UUID.randomUUID();
         this.tweetService.save(
-            Tweet(id, user.get(), body.text, body.image, mutableListOf())
+            Tweet(id, user.get(), body.text, body.image, mutableListOf(), mutableListOf())
         )
 
-        return ResponseUtils.ok(mapOf(
-            "id" to id
-        ))
+        return ResponseUtils.ok(
+            mapOf(
+                "id" to id
+            )
+        )
     }
 
     @GetMapping
@@ -60,7 +65,7 @@ class TweetController(
 
     @Protected
     @PostMapping("like")
-    fun likeTweet(@JwtSubject uid: String, @RequestParam(name="tweet") tweetId: String): ResponseEntity<Any> {
+    fun likeTweet(@JwtSubject uid: String, @RequestParam(name = "tweet") tweetId: String): ResponseEntity<Any> {
         val user = this.userService.findById(uid)
 
         if (user.isEmpty) {
@@ -76,11 +81,36 @@ class TweetController(
         val index = tweet.get().likes.indexOf(user.get());
         if (index != -1) {
             tweet.get().likes.removeAt(index)
-        }
-        else {
+        } else {
             tweet.get().likes.add(user.get())
         }
 
+        this.tweetService.save(tweet.get())
+        return ResponseUtils.ok("Updated tweet")
+    }
+
+    @Protected
+    @PostMapping("comment")
+    fun addComment(@JwtSubject uid: String, @Valid @RequestBody body: CommentRequestBody): ResponseEntity<Any> {
+        val user = this.userService.findById(uid)
+
+        if (user.isEmpty) {
+            return ResponseUtils.badRequest("User not found")
+        }
+
+        val tweet = this.tweetService.findById(body.tweetId);
+
+        if (tweet.isEmpty) {
+            return ResponseUtils.badRequest("Tweet not found")
+        }
+
+        val comment = this.commentService.save(Comment(
+            UUID.randomUUID(),
+            user.get(),
+            body.text
+        ))
+
+        tweet.get().comments.add(comment)
         this.tweetService.save(tweet.get())
         return ResponseUtils.ok("Updated tweet")
     }
