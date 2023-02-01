@@ -5,6 +5,7 @@ import {
   UserTweet,
   AppFooter,
   Head,
+  CommentCreator,
 } from "@/components";
 import React from "react";
 import {Container, Spacer} from "@nextui-org/react";
@@ -44,6 +45,7 @@ const DetailedTweet = ({tweet}: Props) => {
         <Container xs>
           <Spacer y={2} />
           <UserTweet {...tweet} />
+          <CommentCreator tweetId={tweet.id} />
           {tweet.comments.map(comment => (
             <React.Fragment key={comment.id}>
               <Spacer y={1} />

@@ -1,7 +1,7 @@
 import {Tweet} from "@/lib/models";
 import {BaseAPI} from "../../utils";
 import getAuthAPI from "../auth";
-import {TweetCreateInterface} from "./types";
+import {AddCommentInterface, TweetCreateInterface} from "./types";
 
 export class TweetsAPI extends BaseAPI {
   constructor() {
@@ -51,6 +51,20 @@ export class TweetsAPI extends BaseAPI {
       params: {
         tweet: tweetId,
       },
+    });
+
+    return result.data;
+  };
+
+  addComment = async (body: AddCommentInterface): Promise<string> => {
+    const accessToken = await getAuthAPI().newAccessToken();
+    const result = await this.callMethod({
+      method: "POST",
+      url: "/comment",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body,
     });
 
     return result.data;
