@@ -42,6 +42,8 @@ export const StyledTweetsSendButton = styled("button", {
   },
 });
 
+export const StyledCommentSendButton = StyledTweetsSendButton;
+
 export const StyledTweetsLikeButton = styled("button", {
   // reset button styles
   background: "transparent",

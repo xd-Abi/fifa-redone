@@ -12,6 +12,7 @@ import {getTweetsAPI} from "@/lib/api";
 import {Tweet} from "@/lib/models";
 import {GetServerSidePropsContext} from "next";
 import {useRouter} from "next/router";
+import UserComment from "@/components/tweets/user-comment";
 
 type Props = {
   tweet: Tweet;
@@ -35,7 +36,7 @@ const DetailedTweet = ({tweet}: Props) => {
   return (
     <React.Fragment>
       <Head
-        title="Tweets - FIFA"
+        title={`${tweet.text.substring(0, 9)}...`}
         description="Share your thoughts with the world"
       />
       <AppNavbar />
@@ -43,13 +44,12 @@ const DetailedTweet = ({tweet}: Props) => {
         <Container xs>
           <Spacer y={2} />
           <UserTweet {...tweet} />
-          {/* <DefaultTweets /> */}
-          {/* {tweets.map(tweet => (
-            <React.Fragment key={tweet.id}>
+          {tweet.comments.map(comment => (
+            <React.Fragment key={comment.id}>
               <Spacer y={1} />
-              <UserTweet {...tweet} />
+              <UserComment {...comment} />
             </React.Fragment>
-          ))} */}
+          ))}
         </Container>
       </main>
       <AppFooter />
