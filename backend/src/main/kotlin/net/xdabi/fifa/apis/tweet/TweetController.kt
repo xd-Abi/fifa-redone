@@ -75,7 +75,7 @@ class TweetController(
 
         val tweet = this.tweetService.findById(tweetId);
 
-        if (tweet.get().creator?.uid === user.get().uid) {
+        if (tweet.get().creator?.uid !== user.get().uid) {
             return ResponseUtils.badRequest("Access denied")
         }
 

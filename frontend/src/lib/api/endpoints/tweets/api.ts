@@ -48,7 +48,7 @@ export class TweetsAPI extends BaseAPI {
         Authorization: `Bearer ${accessToken}`,
       },
       params: {
-        tweetId: id,
+        tweet: id,
       },
     });
 
