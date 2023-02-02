@@ -1,8 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {Avatar, Card, Col, Image, Row, Text} from "@nextui-org/react";
 import {Tweet} from "@/lib/models";
-import {HeartIcon, SpeachBubbleIcon} from "../icons";
-import {StyledTweetsCommentContainer, StyledTweetsLikeButton} from "./styled";
+import {DeleteIcon, HeartIcon, SpeachBubbleIcon} from "../icons";
+import {
+  StyledTweetsCommentContainer,
+  StyledTweetsDeleteButton,
+  StyledTweetsLikeButton,
+} from "./styled";
 import {useUser} from "@/hooks";
 import {getTweetsAPI} from "@/lib/api";
 
@@ -104,6 +108,12 @@ const UserTweet = ({id, text, image, creator, likes, comments}: Props) => {
         </Col>
         <Col css={{w: "fit-content"}}>
           <Text color="$gray500">{comments.length}</Text>
+        </Col>
+        <Col></Col>
+        <Col css={{w: "fit-content"}}>
+          <StyledTweetsDeleteButton>
+            <DeleteIcon size={20} />
+          </StyledTweetsDeleteButton>
         </Col>
       </Card.Footer>
     </Card>

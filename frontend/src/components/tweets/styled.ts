@@ -83,6 +83,24 @@ export const StyledTweetsLikeButton = styled("button", {
   },
 });
 
+export const StyledTweetsDeleteButton = styled("button", {
+  // reset button styles
+  background: "transparent",
+  border: "none",
+  padding: 0,
+  size: 20,
+  // styles
+  margin: "0 10px",
+  dflex: "center",
+  svg: {
+    size: "100%",
+    boxShadow: "0 5px 20px -5px rgba(0, 0, 0, 0.1)",
+    path: {
+      stroke: "$red600",
+    },
+  },
+});
+
 export const StyledTweetsCommentContainer = styled("div", {
   // reset button styles
   background: "transparent",

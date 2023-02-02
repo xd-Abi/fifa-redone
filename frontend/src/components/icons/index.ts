@@ -14,6 +14,7 @@ export type IconProps = {
 export const Icon = styled("svg", {});
 
 export {default as ArrowLeftIcon} from "./arrow-left";
+export {default as DeleteIcon} from "./delete";
 export {default as GithubIcon} from "./github";
 export {default as HeartIcon} from "./heart-icon";
 export {default as MoonIcon} from "./moon";
