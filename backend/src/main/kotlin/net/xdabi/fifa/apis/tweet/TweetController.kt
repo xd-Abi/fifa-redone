@@ -8,6 +8,7 @@ import net.xdabi.fifa.common.annotation.Protected
 import net.xdabi.fifa.utils.ResponseUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -61,6 +62,29 @@ class TweetController(
         }
 
         return ResponseUtils.ok(tweet)
+    }
+
+    @Protected
+    @DeleteMapping
+    fun deleteTweet(@JwtSubject uid: String, @RequestParam(name = "tweet") tweetId: String): ResponseEntity<Any> {
+        val user = this.userService.findById(uid)
+
+        if (user.isEmpty) {
+            return ResponseUtils.badRequest("User not found")
+        }
+
+        val tweet = this.tweetService.findById(tweetId);
+
+        if (tweet.get().creator?.uid !== user.get().uid) {
+            return ResponseUtils.badRequest("Access denied")
+        }
+
+        if (tweet.isEmpty) {
+            return ResponseUtils.badRequest("Tweet not found")
+        }
+
+        this.tweetService.delete(tweet.get())
+        return ResponseUtils.ok("Deleted Tweet")
     }
 
     @Protected

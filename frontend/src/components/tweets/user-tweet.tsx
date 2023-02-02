@@ -1,8 +1,13 @@
 import React, {useState, useEffect} from "react";
 import {Avatar, Card, Col, Image, Row, Text} from "@nextui-org/react";
+import {useRouter} from "next/router";
 import {Tweet} from "@/lib/models";
-import {HeartIcon, SpeachBubbleIcon} from "../icons";
-import {StyledTweetsCommentContainer, StyledTweetsLikeButton} from "./styled";
+import {DeleteIcon, HeartIcon, SpeachBubbleIcon} from "../icons";
+import {
+  StyledTweetsCommentContainer,
+  StyledTweetsDeleteButton,
+  StyledTweetsLikeButton,
+} from "./styled";
 import {useUser} from "@/hooks";
 import {getTweetsAPI} from "@/lib/api";
 
@@ -10,6 +15,7 @@ type Props = Tweet;
 
 const UserTweet = ({id, text, image, creator, likes, comments}: Props) => {
   const user = useUser();
+  const router = useRouter();
   const [isLiked, setIsLiked] = useState(false);
   const [likesAmount, setLikesAmount] = useState(likes.length);
 
@@ -38,6 +44,18 @@ const UserTweet = ({id, text, image, creator, likes, comments}: Props) => {
     setIsLiked(!isLiked);
 
     getTweetsAPI().likeTweet(id);
+  };
+
+  const onDeleteButtonClick = () => {
+    if (!user.isAuthenticated) {
+      return;
+    }
+
+    getTweetsAPI()
+      .deleteTweet(id)
+      .then(() => {
+        router.push("/tweets");
+      });
   };
 
   return (
@@ -104,6 +122,14 @@ const UserTweet = ({id, text, image, creator, likes, comments}: Props) => {
         </Col>
         <Col css={{w: "fit-content"}}>
           <Text color="$gray500">{comments.length}</Text>
+        </Col>
+        <Col></Col>
+        <Col css={{w: "fit-content"}}>
+          {user.user?.uid === creator.uid && (
+            <StyledTweetsDeleteButton onClick={onDeleteButtonClick}>
+              <DeleteIcon size={20} />
+            </StyledTweetsDeleteButton>
+          )}
         </Col>
       </Card.Footer>
     </Card>

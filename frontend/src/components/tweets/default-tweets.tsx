@@ -9,6 +9,7 @@ const DefaultTweets = () => {
       <UserTweet
         creator={
           {
+            uid: "123",
             username: "ESPNUK",
             firstname: "ESPN",
             lastname: "UK",
@@ -28,6 +29,7 @@ const DefaultTweets = () => {
       <UserTweet
         creator={
           {
+            uid: "123",
             username: "goal",
             firstname: "GOAL",
             lastname: "",
@@ -49,6 +51,7 @@ const DefaultTweets = () => {
       <UserTweet
         creator={
           {
+            uid: "123",
             username: "fifa",
             firstname: "FIFA",
             lastname: "Offial",
@@ -68,6 +71,7 @@ const DefaultTweets = () => {
       <UserTweet
         creator={
           {
+            uid: "123",
             username: "elonmusk",
             firstname: "Mr.",
             lastname: "Tweet",

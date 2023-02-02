@@ -40,6 +40,21 @@ export class TweetsAPI extends BaseAPI {
     return result.data;
   };
 
+  deleteTweet = async (id: string): Promise<string> => {
+    const accessToken = await getAuthAPI().newAccessToken();
+    const result = await this.callMethod({
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        tweet: id,
+      },
+    });
+
+    return result.data;
+  };
+
   likeTweet = async (tweetId: string): Promise<string> => {
     const accessToken = await getAuthAPI().newAccessToken();
     const result = await this.callMethod({
